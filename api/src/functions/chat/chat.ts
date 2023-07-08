@@ -53,6 +53,7 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
     const channel = ably.channels.get(userId);
     const interactionId = uuid()
 
+
     // Retrieve the conversation log and save the user's prompt
     const conversationLog = new ConversationLog(userId)
     const conversationHistory = await conversationLog.getConversation({limit: 10})
