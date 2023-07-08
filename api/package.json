@@ -3,7 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@pinecone-database/pinecone": "^0.1.6",
     "@redwoodjs/api": "5.4.2",
-    "@redwoodjs/graphql-server": "5.4.2"
+    "@redwoodjs/graphql-server": "5.4.2",
+    "ably": "^1.2.41",
+    "bottleneck": "^2.19.5",
+    "limiter": "^2.1.0",
+    "uuidv4": "^6.2.13"
   }
 }

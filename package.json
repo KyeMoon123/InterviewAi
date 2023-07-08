@@ -7,7 +7,8 @@
     ]
   },
   "devDependencies": {
-    "@redwoodjs/core": "5.4.2"
+    "@redwoodjs/core": "5.4.2",
+    "prettier-plugin-tailwindcss": "^0.3.0"
   },
   "eslintConfig": {
     "extends": "@redwoodjs/eslint-config",
@@ -20,5 +21,13 @@
   "prisma": {
     "seed": "yarn rw exec seed"
   },
-  "packageManager": "yarn@3.6.0"
+  "packageManager": "yarn@3.6.0",
+  "dependencies": {
+    "@supercharge/promise-pool": "^2.4.0",
+    "api": "workspace:^",
+    "langchain": "^0.0.104",
+    "lodash": "^4.17.21",
+    "puppeteer-core": "^20.8.0",
+    "workspace": "^0.0.1-preview.1"
+  }
 }
