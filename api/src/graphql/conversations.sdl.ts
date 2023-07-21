@@ -1,11 +1,12 @@
 export const schema = gql`
   type Conversation {
     id: String!
+    name: String!
     createdAt: DateTime!
     updatedAt: DateTime!
-    speaker: Speaker!
-    entry: String!
+    entries:  [ConversationEntry!]!
     userId: String
+    modelId: String!
   }
 
   enum Speaker {
@@ -16,12 +17,13 @@ export const schema = gql`
   type Query {
     conversations: [Conversation!]! @requireAuth
     conversation(id: String!): Conversation @requireAuth
+    modelConversations(modelId:String!): [Conversation!]! @requireAuth
   }
 
   input CreateConversationInput {
-    speaker: Speaker!
-    entry: String!
-    userId: String
+    userId: String!
+    name: String!
+    modelId: String!
   }
 
   input UpdateConversationInput {

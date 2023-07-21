@@ -12,6 +12,17 @@ export const conversation: QueryResolvers['conversation'] = ({ id }) => {
   })
 }
 
+export const modelConversations: QueryResolvers['modelConversations'] = ({
+  modelId}) => {
+
+  return db.conversation.findMany({
+    where: {
+      modelId: modelId,
+      userId: context.currentUser.sub
+    }
+  })
+}
+
 export const createConversation: MutationResolvers['createConversation'] = ({
   input,
 }) => {

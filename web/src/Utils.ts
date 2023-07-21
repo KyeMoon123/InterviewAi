@@ -1,5 +1,6 @@
 import {Types} from "ably";
 import {ConversationEntry} from "src/components/Conversation/Conversation";
+import {Speaker} from "lucide-react";
 
 export const updateChatbotMessage = (
   conversation: ConversationEntry[],
@@ -24,7 +25,7 @@ export const updateChatbotMessage = (
       {
         id: interactionId,
         message: message.data.token,
-        speaker: "bot",
+        speaker: "ai",
         date: new Date(),
       },
     ];

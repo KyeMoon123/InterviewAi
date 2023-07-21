@@ -1,8 +1,7 @@
-import { PineconeClient, Vector } from "@pinecone-database/pinecone";
-import { Document } from "langchain/document";
-import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { uuid } from "uuidv4";
-import { TokenTextSplitter } from "langchain/text_splitter";
+import {PineconeClient, Vector} from "@pinecone-database/pinecone";
+import {Document} from "langchain/document";
+import {OpenAIEmbeddings} from "langchain/embeddings/openai";
+import {uuid} from "uuidv4";
 import Bottleneck from "bottleneck";
 
 export const EmbeddingsService = (function () {
@@ -46,13 +45,13 @@ export const PineConeService = (function () {
     message: string
   }
 
-  const initPineconeClient = async () => {
+  const initPineconeClient = async ():Promise<PineconeClient> => {
     pinecone = new PineconeClient();
-    console.log("init pinecone")
     await pinecone.init({
       environment: process.env.PINECONE_ENVIRONMENT!,
       apiKey: process.env.PINECONE_API_KEY!,
     });
+    return pinecone
   }
 
   const getIndexes = async ():Promise<string[]> => {
@@ -72,6 +71,7 @@ export const PineConeService = (function () {
 
   return{
     getIndexes,
-    getIndex
+    getIndex,
+    initPineconeClient
   }
 })();

@@ -4729,6 +4729,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hookform/resolvers@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@hookform/resolvers@npm:3.1.1"
+  peerDependencies:
+    react-hook-form: ^7.0.0
+  checksum: 340e2163247febd3941971984031979bad599ff3728eec63fadc522a8f54e56a593891ea70bb8a3ff40fa024ed9d1c71d485a66997b719fe45526f9399faeaf6
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.10":
   version: 0.11.10
   resolution: "@humanwhocodes/config-array@npm:0.11.10"
@@ -5910,6 +5919,40 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@redwoodjs/auth-supabase-api@npm:5.4.2":
+  version: 5.4.2
+  resolution: "@redwoodjs/auth-supabase-api@npm:5.4.2"
+  dependencies:
+    "@babel/runtime-corejs3": 7.22.5
+    core-js: 3.31.0
+    jsonwebtoken: 9.0.0
+  checksum: 55e0740a49a49a07fa433eb0d8b62b3959e2c6b7f49754211467cae0e23a479a421b06230385c444df64d913cd67f4f2d266bdf810eadff33ad35cc5fd9998c1
+  languageName: node
+  linkType: hard
+
+"@redwoodjs/auth-supabase-setup@npm:5.4.2":
+  version: 5.4.2
+  resolution: "@redwoodjs/auth-supabase-setup@npm:5.4.2"
+  dependencies:
+    "@babel/runtime-corejs3": 7.22.5
+    "@redwoodjs/cli-helpers": 5.4.2
+    core-js: 3.31.0
+  checksum: ae150735cb6aedbdb0a4bd00f4436c47eadc69064f44f3d6cc89dab2b33af80de596c27fbbd077c7cfebc5f0f5c7a7440035b04eb42543e6bcbc19606b5fff1d
+  languageName: node
+  linkType: hard
+
+"@redwoodjs/auth-supabase-web@npm:5.4.2":
+  version: 5.4.2
+  resolution: "@redwoodjs/auth-supabase-web@npm:5.4.2"
+  dependencies:
+    "@babel/runtime-corejs3": 7.22.5
+    core-js: 3.31.0
+  peerDependencies:
+    "@supabase/supabase-js": 2.26.0
+  checksum: 803b6bdc2bf0248bb6e6d6e7513d51134eb2f096a82726c5f112b74655032eae25080d354701b3b4a50b397348d8c4d3a1f35a493966006c23a2d6d69b33f0c6
+  languageName: node
+  linkType: hard
+
 "@redwoodjs/auth@npm:5.4.2":
   version: 5.4.2
   resolution: "@redwoodjs/auth@npm:5.4.2"
@@ -6448,6 +6491,13 @@ __metadata:
   dependencies:
     "@sinonjs/commons": ^3.0.0
   checksum: 9f4726e7799a409d51d6760af3b65dac061b4f5c0b69b3af4caf79ecc3012dacae1f40078d915f9cec1ecd81d84a41619a98d4878bb2ef9f3ed66c16c2f5f833
+  languageName: node
+  linkType: hard
+
+"@stitches/core@npm:^1.2.8":
+  version: 1.2.8
+  resolution: "@stitches/core@npm:1.2.8"
+  checksum: f2ddf5aba3f3794529ceda10e573d61d649899c1d6e4f72f0fb77915577bb4e5a1ffc6e0cebd2bc19a1e6f93d5e1e91ff0790c7a8dfb452e90b090b1a5f1c531
   languageName: node
   linkType: hard
 
@@ -7668,6 +7718,91 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@supabase/auth-ui-react@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "@supabase/auth-ui-react@npm:0.4.2"
+  dependencies:
+    "@stitches/core": ^1.2.8
+    "@supabase/auth-ui-shared": 0.1.6
+    prop-types: ^15.7.2
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  peerDependencies:
+    "@supabase/supabase-js": ^2.21.0
+  checksum: 308f2c4f9395a06cc17e67de15b283426c565b3b52c82d615376f2589202c88ab52664dda0f1b7b060ac760cb1ac272cdae1985d2529cf2e2465c8c26c910b58
+  languageName: node
+  linkType: hard
+
+"@supabase/auth-ui-shared@npm:0.1.6, @supabase/auth-ui-shared@npm:^0.1.6":
+  version: 0.1.6
+  resolution: "@supabase/auth-ui-shared@npm:0.1.6"
+  peerDependencies:
+    "@supabase/supabase-js": ^2.21.0
+  checksum: 2e85f5083d6adbf0293bc514ab4bf80863e1c13c5eb562478a4aad4ecab9d1bb4eb394516619001542d18a1c63180c82b85e4fa51d870e9156a3326189a920e8
+  languageName: node
+  linkType: hard
+
+"@supabase/functions-js@npm:^2.1.0":
+  version: 2.1.2
+  resolution: "@supabase/functions-js@npm:2.1.2"
+  dependencies:
+    cross-fetch: ^3.1.5
+  checksum: fe35d1a145570c83d33c3f09148b0d7448b0d78e8a55da38b7d7ba3d22d6373303cf23a5c19d8a8dcc98f53f4247de2cb831923e6aff6bdc9cf2aa2e58ce7335
+  languageName: node
+  linkType: hard
+
+"@supabase/gotrue-js@npm:^2.31.0":
+  version: 2.40.0
+  resolution: "@supabase/gotrue-js@npm:2.40.0"
+  dependencies:
+    cross-fetch: ^3.1.5
+  checksum: 81e7ec5ace6e9a81860ef4def1c175cd48abb7e7052b1cffed4bb70097b86c515697bd0129204a89ca6bb6bff0f3ebde04c1a56fbdb81bbff6a6a3dea002ca46
+  languageName: node
+  linkType: hard
+
+"@supabase/postgrest-js@npm:^1.7.0":
+  version: 1.7.2
+  resolution: "@supabase/postgrest-js@npm:1.7.2"
+  dependencies:
+    cross-fetch: ^3.1.5
+  checksum: 8a54e608aa66a3d3785d9c5d02ed93d6649d830d5aa494bece6003ab8e6bd708e5471aba5b50b1fb60c5152d8f0faa52350032825aa5cbd7355708e96ffac3c4
+  languageName: node
+  linkType: hard
+
+"@supabase/realtime-js@npm:^2.7.3":
+  version: 2.7.3
+  resolution: "@supabase/realtime-js@npm:2.7.3"
+  dependencies:
+    "@types/phoenix": ^1.5.4
+    "@types/websocket": ^1.0.3
+    websocket: ^1.0.34
+  checksum: 9c1aecc7fa31538ec0589cbd601b9835c02d65cfd29efe47a1401d4934923b4044b96f472794d5d446aecd6bb3052cee6fd8bb0fbde06da1fb580a17750be017
+  languageName: node
+  linkType: hard
+
+"@supabase/storage-js@npm:^2.5.1":
+  version: 2.5.1
+  resolution: "@supabase/storage-js@npm:2.5.1"
+  dependencies:
+    cross-fetch: ^3.1.5
+  checksum: 522875344341477a80c13b9aa845563fd2b0098cfe2e99d9b297d53640f16f234c1938b0fa161ae429947a1489be6816d7bb6394fb3b06bb44c537714c4a41a8
+  languageName: node
+  linkType: hard
+
+"@supabase/supabase-js@npm:^2, @supabase/supabase-js@npm:^2.26.0":
+  version: 2.26.0
+  resolution: "@supabase/supabase-js@npm:2.26.0"
+  dependencies:
+    "@supabase/functions-js": ^2.1.0
+    "@supabase/gotrue-js": ^2.31.0
+    "@supabase/postgrest-js": ^1.7.0
+    "@supabase/realtime-js": ^2.7.3
+    "@supabase/storage-js": ^2.5.1
+    cross-fetch: ^3.1.5
+  checksum: c56047a832895bdecd72dbe763dea79ba07e12589bf3d81aaf7d367cf7d918c5ee784fb9527f3d0ec3e8389a2a7e448b4ff21c1ae31e8b01e7b9f3f2775802bb
+  languageName: node
+  linkType: hard
+
 "@supercharge/promise-pool@npm:^2.4.0":
   version: 2.4.0
   resolution: "@supercharge/promise-pool@npm:2.4.0"
@@ -8344,6 +8479,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:>=8.1.0":
+  version: 20.4.2
+  resolution: "@types/node@npm:20.4.2"
+  checksum: ca506e089737d54effabda5d6534fdf9fdbe22adbcc4864a170feea390389f38cbae6abcf89c2b1ce5c3e4ffc450b35341509a7619f850babf43106009f01b2d
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:^14.0.10 || ^16.0.0, @types/node@npm:^14.14.20 || ^16.0.0":
   version: 16.18.34
   resolution: "@types/node@npm:16.18.34"
@@ -8376,6 +8518,13 @@ __metadata:
   version: 5.0.3
   resolution: "@types/parse5@npm:5.0.3"
   checksum: 7d7ebbcb704a0ef438aa0de43ea1fd9723dfa802b8fa459628ceaf063f092bd19791b2a2580265244898dcc9d40f7345588a76cf752847d29540539f802711ed
+  languageName: node
+  linkType: hard
+
+"@types/phoenix@npm:^1.5.4":
+  version: 1.6.0
+  resolution: "@types/phoenix@npm:1.6.0"
+  checksum: 5c3caf2028423b584680bf839b2579c4369a3c1388d33dbf9a8354be8b74c6357cba045f9a1ea32f92d5a6f6c78375c3e275a1d363fbf289aef50a2eea0d8748
   languageName: node
   linkType: hard
 
@@ -8645,6 +8794,15 @@ __metadata:
     anymatch: ^3.0.0
     source-map: ^0.6.0
   checksum: dc6db66fa84664d8fab7ea79bd2482ea1c4500b09ed6939258e205548501b8d29c06b0fe5e869c4b59f74acf884c61a391875dadb9f7a91c8cd10c3841143729
+  languageName: node
+  linkType: hard
+
+"@types/websocket@npm:^1.0.3":
+  version: 1.0.5
+  resolution: "@types/websocket@npm:1.0.5"
+  dependencies:
+    "@types/node": "*"
+  checksum: 866f31a394d4fbcb4055420daaec16096e42666e30c573ca4291fc7fcde8316eb2ab4995f7f21c6e5e37572bcbf72483d8a6d340db303c6c2fcbbf79377b8b5a
   languageName: node
   linkType: hard
 
@@ -9766,11 +9924,18 @@ __metadata:
   dependencies:
     "@pinecone-database/pinecone": ^0.1.6
     "@redwoodjs/api": 5.4.2
+    "@redwoodjs/auth-supabase-api": 5.4.2
     "@redwoodjs/graphql-server": 5.4.2
+    "@supabase/auth-ui-react": ^0.4.2
+    "@supabase/auth-ui-shared": ^0.1.6
+    "@supabase/supabase-js": ^2.26.0
     ably: ^1.2.41
     bottleneck: ^2.19.5
+    langchain: ^0.0.105
     limiter: ^2.1.0
     uuidv4: ^6.2.13
+    web: "workspace:^"
+    workspace: ^0.0.1-preview.1
   languageName: unknown
   linkType: soft
 
@@ -11146,6 +11311,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bufferutil@npm:^4.0.1":
+  version: 4.0.7
+  resolution: "bufferutil@npm:4.0.7"
+  dependencies:
+    node-gyp: latest
+    node-gyp-build: ^4.3.0
+  checksum: 48d6cf98b9c227db65f0a1062b6c80e933c43dc03e0ad5f908da0e79cc87a633c215516f4d541ca9b0e09c1fb386f1bbe1fc2de913057f0201d14798d3e0c2bb
+  languageName: node
+  linkType: hard
+
 "builtin-status-codes@npm:^3.0.0":
   version: 3.0.0
   resolution: "builtin-status-codes@npm:3.0.0"
@@ -11787,6 +11962,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"class-variance-authority@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "class-variance-authority@npm:0.6.1"
+  dependencies:
+    clsx: 1.2.1
+  checksum: 0685b1a92d97fbb26b1031a9dcb9d419c4bbb163aa20a6025a11f3a92ebd6209da277c63f789b294d890a0d500558de285fd842068c824d40b5beda97e01aa1a
+  languageName: node
+  linkType: hard
+
 "classnames@npm:^2.2.6":
   version: 2.3.2
   resolution: "classnames@npm:2.3.2"
@@ -11948,6 +12132,13 @@ __metadata:
   version: 1.0.4
   resolution: "clone@npm:1.0.4"
   checksum: 2176952b3649293473999a95d7bebfc9dc96410f6cbd3d2595cf12fd401f63a4bf41a7adbfd3ab2ff09ed60cb9870c58c6acdd18b87767366fabfc163700f13b
+  languageName: node
+  linkType: hard
+
+"clsx@npm:1.2.1, clsx@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "clsx@npm:1.2.1"
+  checksum: 34dead8bee24f5e96f6e7937d711978380647e936a22e76380290e35486afd8634966ce300fc4b74a32f3762c7d4c0303f442c3e259f4ce02374eb0c82834f27
   languageName: node
   linkType: hard
 
@@ -12966,6 +13157,16 @@ __metadata:
   version: 1.0.2
   resolution: "cyclist@npm:1.0.2"
   checksum: 163e2f7207180ccf2bb5a6ca8a7360469c13fad631509ef96de02397266b3a42089e2b2b51b97d3d8fdc4709d2fbe651c309670e5cc28b0ae445b1e5a34a98e2
+  languageName: node
+  linkType: hard
+
+"d@npm:1, d@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "d@npm:1.0.1"
+  dependencies:
+    es5-ext: ^0.10.50
+    type: ^1.0.1
+  checksum: 1fedcb3b956a461f64d86b94b347441beff5cef8910b6ac4ec509a2c67eeaa7093660a98b26601ac91f91260238add73bdf25867a9c0cb783774642bc4c1523f
   languageName: node
   linkType: hard
 
@@ -14081,6 +14282,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"es5-ext@npm:^0.10.35, es5-ext@npm:^0.10.50":
+  version: 0.10.62
+  resolution: "es5-ext@npm:0.10.62"
+  dependencies:
+    es6-iterator: ^2.0.3
+    es6-symbol: ^3.1.3
+    next-tick: ^1.1.0
+  checksum: 72dfbec5e4bce24754be9f2c2a1c67c01de3fe000103c115f52891f6a51f44a59674c40a1f6bd2390fcd43987746dccb76efafea91c7bb6295bdca8d63ba3db4
+  languageName: node
+  linkType: hard
+
 "es5-shim@npm:^4.5.13":
   version: 4.6.7
   resolution: "es5-shim@npm:4.6.7"
@@ -14088,10 +14300,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"es6-iterator@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "es6-iterator@npm:2.0.3"
+  dependencies:
+    d: 1
+    es5-ext: ^0.10.35
+    es6-symbol: ^3.1.1
+  checksum: 91f20b799dba28fb05bf623c31857fc1524a0f1c444903beccaf8929ad196c8c9ded233e5ac7214fc63a92b3f25b64b7f2737fcca8b1f92d2d96cf3ac902f5d8
+  languageName: node
+  linkType: hard
+
 "es6-shim@npm:^0.35.5":
   version: 0.35.8
   resolution: "es6-shim@npm:0.35.8"
   checksum: e54e147677b9cd57c96bbc2332c3096ab861040b22daa27728204cacf9aa656d6a3eeb5367a037b276bfbe442ec866938a95b4612accf0cd24d01c209e48eaf9
+  languageName: node
+  linkType: hard
+
+"es6-symbol@npm:^3.1.1, es6-symbol@npm:^3.1.3":
+  version: 3.1.3
+  resolution: "es6-symbol@npm:3.1.3"
+  dependencies:
+    d: ^1.0.1
+    ext: ^1.1.2
+  checksum: 22982f815f00df553a89f4fb74c5048fed85df598482b4bd38dbd173174247949c72982a7d7132a58b147525398400e5f182db59b0916cb49f1e245fb0e22233
   languageName: node
   linkType: hard
 
@@ -14750,6 +14983,15 @@ __metadata:
     utils-merge: 1.0.1
     vary: ~1.1.2
   checksum: 75af556306b9241bc1d7bdd40c9744b516c38ce50ae3210658efcbf96e3aed4ab83b3432f06215eae5610c123bc4136957dc06e50dfc50b7d4d775af56c4c59c
+  languageName: node
+  linkType: hard
+
+"ext@npm:^1.1.2":
+  version: 1.7.0
+  resolution: "ext@npm:1.7.0"
+  dependencies:
+    type: ^2.7.2
+  checksum: a8e5f34e12214e9eee3a4af3b5c9d05ba048f28996450975b369fc86e5d0ef13b6df0615f892f5396a9c65d616213c25ec5b0ad17ef42eac4a500512a19da6c7
   languageName: node
   linkType: hard
 
@@ -19212,6 +19454,196 @@ __metadata:
   languageName: node
   linkType: hard
 
+"langchain@npm:^0.0.105":
+  version: 0.0.105
+  resolution: "langchain@npm:0.0.105"
+  dependencies:
+    "@anthropic-ai/sdk": ^0.4.3
+    ansi-styles: ^5.0.0
+    binary-extensions: ^2.2.0
+    camelcase: 6
+    decamelize: ^1.2.0
+    expr-eval: ^2.0.2
+    flat: ^5.0.2
+    js-tiktoken: ^1.0.7
+    js-yaml: ^4.1.0
+    jsonpointer: ^5.0.1
+    langchainplus-sdk: ^0.0.19
+    ml-distance: ^4.0.0
+    object-hash: ^3.0.0
+    openai: ^3.3.0
+    openapi-types: ^12.1.3
+    p-queue: ^6.6.2
+    p-retry: 4
+    uuid: ^9.0.0
+    yaml: ^2.2.1
+    zod: ^3.21.4
+    zod-to-json-schema: ^3.20.4
+  peerDependencies:
+    "@aws-sdk/client-dynamodb": ^3.310.0
+    "@aws-sdk/client-lambda": ^3.310.0
+    "@aws-sdk/client-s3": ^3.310.0
+    "@aws-sdk/client-sagemaker-runtime": ^3.310.0
+    "@aws-sdk/client-sfn": ^3.310.0
+    "@clickhouse/client": ^0.0.14
+    "@elastic/elasticsearch": ^8.4.0
+    "@getmetal/metal-sdk": "*"
+    "@getzep/zep-js": ^0.4.1
+    "@gomomento/sdk": ^1.23.0
+    "@google-cloud/storage": ^6.10.1
+    "@huggingface/inference": ^1.5.1
+    "@notionhq/client": ^2.2.5
+    "@opensearch-project/opensearch": "*"
+    "@pinecone-database/pinecone": "*"
+    "@qdrant/js-client-rest": ^1.2.0
+    "@supabase/postgrest-js": ^1.1.1
+    "@supabase/supabase-js": ^2.10.0
+    "@tensorflow-models/universal-sentence-encoder": "*"
+    "@tensorflow/tfjs-converter": "*"
+    "@tensorflow/tfjs-core": "*"
+    "@tigrisdata/vector": ^1.1.0
+    "@upstash/redis": ^1.20.6
+    "@zilliz/milvus2-sdk-node": ">=2.2.7"
+    apify-client: ^2.7.1
+    axios: "*"
+    cheerio: ^1.0.0-rc.12
+    chromadb: ^1.5.3
+    cohere-ai: ^5.0.2
+    d3-dsv: ^2.0.0
+    epub2: ^3.0.1
+    faiss-node: ^0.2.1
+    google-auth-library: ^8.8.0
+    hnswlib-node: ^1.4.2
+    html-to-text: ^9.0.5
+    ignore: ^5.2.0
+    mammoth: "*"
+    mongodb: ^5.2.0
+    mysql2: ^3.3.3
+    notion-to-md: ^3.1.0
+    pdf-parse: 1.1.1
+    peggy: ^3.0.2
+    pg: ^8.11.0
+    pickleparser: ^0.1.0
+    playwright: ^1.32.1
+    puppeteer: ^19.7.2
+    redis: ^4.6.4
+    replicate: ^0.9.0
+    srt-parser-2: ^1.2.2
+    typeorm: ^0.3.12
+    typesense: ^1.5.3
+    vectordb: ^0.1.4
+    weaviate-ts-client: ^1.0.0
+  peerDependenciesMeta:
+    "@aws-sdk/client-dynamodb":
+      optional: true
+    "@aws-sdk/client-lambda":
+      optional: true
+    "@aws-sdk/client-s3":
+      optional: true
+    "@aws-sdk/client-sagemaker-runtime":
+      optional: true
+    "@aws-sdk/client-sfn":
+      optional: true
+    "@clickhouse/client":
+      optional: true
+    "@elastic/elasticsearch":
+      optional: true
+    "@getmetal/metal-sdk":
+      optional: true
+    "@getzep/zep-js":
+      optional: true
+    "@gomomento/sdk":
+      optional: true
+    "@google-cloud/storage":
+      optional: true
+    "@huggingface/inference":
+      optional: true
+    "@notionhq/client":
+      optional: true
+    "@opensearch-project/opensearch":
+      optional: true
+    "@pinecone-database/pinecone":
+      optional: true
+    "@qdrant/js-client-rest":
+      optional: true
+    "@supabase/postgrest-js":
+      optional: true
+    "@supabase/supabase-js":
+      optional: true
+    "@tensorflow-models/universal-sentence-encoder":
+      optional: true
+    "@tensorflow/tfjs-converter":
+      optional: true
+    "@tensorflow/tfjs-core":
+      optional: true
+    "@tigrisdata/vector":
+      optional: true
+    "@upstash/redis":
+      optional: true
+    "@zilliz/milvus2-sdk-node":
+      optional: true
+    apify-client:
+      optional: true
+    axios:
+      optional: true
+    cheerio:
+      optional: true
+    chromadb:
+      optional: true
+    cohere-ai:
+      optional: true
+    d3-dsv:
+      optional: true
+    epub2:
+      optional: true
+    faiss-node:
+      optional: true
+    google-auth-library:
+      optional: true
+    hnswlib-node:
+      optional: true
+    html-to-text:
+      optional: true
+    ignore:
+      optional: true
+    mammoth:
+      optional: true
+    mongodb:
+      optional: true
+    mysql2:
+      optional: true
+    notion-to-md:
+      optional: true
+    pdf-parse:
+      optional: true
+    peggy:
+      optional: true
+    pg:
+      optional: true
+    pickleparser:
+      optional: true
+    playwright:
+      optional: true
+    puppeteer:
+      optional: true
+    redis:
+      optional: true
+    replicate:
+      optional: true
+    srt-parser-2:
+      optional: true
+    typeorm:
+      optional: true
+    typesense:
+      optional: true
+    vectordb:
+      optional: true
+    weaviate-ts-client:
+      optional: true
+  checksum: d7922ce3ce350b195e52168febbb61ebbdd3c3397caf691ca35186079f3bbfc60dd9b46ab9d4ad6546031f31586e2b50eb4f686c676e8a69431b97607e81f98c
+  languageName: node
+  linkType: hard
+
 "langchainplus-sdk@npm:^0.0.19":
   version: 0.0.19
   resolution: "langchainplus-sdk@npm:0.0.19"
@@ -19726,6 +20158,15 @@ __metadata:
   version: 9.1.2
   resolution: "lru-cache@npm:9.1.2"
   checksum: 886811ab451332c899c230274e7e51507c15e5b3b18f0b39fb55f558978d58799a0b1a50e04d60a448d8c970ff4e6ee718bb119083ca88abb78930284f1e0900
+  languageName: node
+  linkType: hard
+
+"lucide-react@npm:^0.260.0":
+  version: 0.260.0
+  resolution: "lucide-react@npm:0.260.0"
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0
+  checksum: 92f6b05e222315b94f742b527dae5fe37ddc93c8a72d656e15745c7cbce4d5db49aa94d2e15109ea323773d54afb67cfbfaaa5b3940332a23305875d0e947b6a
   languageName: node
   linkType: hard
 
@@ -21027,6 +21468,13 @@ __metadata:
   version: 0.2.1
   resolution: "new-github-issue-url@npm:0.2.1"
   checksum: 64dcfa7a181c8ac2a33f2329c7167289c4fa9b75e1f47f635f63b99d3f442cbb02f67db9fc56a17774a2a91fa94546889baf54799cb701bd5031377d6793c406
+  languageName: node
+  linkType: hard
+
+"next-tick@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "next-tick@npm:1.1.0"
+  checksum: 3ba80dd805fcb336b4f52e010992f3e6175869c8d88bf4ff0a81d5d66e6049f89993463b28211613e58a6b7fe93ff5ccbba0da18d4fa574b96289e8f0b577f28
   languageName: node
   linkType: hard
 
@@ -23259,6 +23707,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"property-expr@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "property-expr@npm:2.0.5"
+  checksum: adf05900e3b0fceca83e1318edba211aec089010e43807abe608165d37640f2e54133a261151d2593a9e93bf3ae98a5ac768c5153e14e7d2b09fc9db48237860
+  languageName: node
+  linkType: hard
+
 "property-information@npm:^5.0.0, property-information@npm:^5.3.0":
   version: 5.6.0
   resolution: "property-information@npm:5.6.0"
@@ -23457,7 +23912,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:6.11.2, qs@npm:^6.10.0":
+"qs@npm:6.11.2, qs@npm:^6.10.0, qs@npm:^6.11.0":
   version: 6.11.2
   resolution: "qs@npm:6.11.2"
   dependencies:
@@ -23627,7 +24082,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.2.0":
+"react-dom@npm:18.2.0, react-dom@npm:^18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
   dependencies:
@@ -23676,7 +24131,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:7.45.1":
+"react-hook-form@npm:7.45.1, react-hook-form@npm:^7.45.1":
   version: 7.45.1
   resolution: "react-hook-form@npm:7.45.1"
   peerDependencies:
@@ -23783,7 +24238,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.2.0":
+"react@npm:18.2.0, react@npm:^18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:
@@ -24573,6 +25028,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
+    "@hookform/resolvers": ^3.1.1
+    "@redwoodjs/auth-supabase-setup": 5.4.2
     "@redwoodjs/core": 5.4.2
     "@supercharge/promise-pool": ^2.4.0
     api: "workspace:^"
@@ -24580,7 +25037,11 @@ __metadata:
     lodash: ^4.17.21
     prettier-plugin-tailwindcss: ^0.3.0
     puppeteer-core: ^20.8.0
+    react-hook-form: ^7.45.1
+    stripe: ^12.13.0
+    web: "workspace:^"
     workspace: ^0.0.1-preview.1
+    yup: ^1.2.0
   languageName: unknown
   linkType: soft
 
@@ -25970,6 +26431,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"stripe@npm:^12.13.0":
+  version: 12.13.0
+  resolution: "stripe@npm:12.13.0"
+  dependencies:
+    "@types/node": ">=8.1.0"
+    qs: ^6.11.0
+  checksum: cf3c63a515a5a53b1cafbad18f410b76c93d9bc9d59f0966ac54f2d5a74c09791e884b629da01459961b1c3d27c64b186a037c8ac8a0befac116e1c8c43dbc78
+  languageName: node
+  linkType: hard
+
 "style-loader@npm:3.3.3":
   version: 3.3.3
   resolution: "style-loader@npm:3.3.3"
@@ -26177,6 +26648,22 @@ __metadata:
     systeminformation: lib/cli.js
   checksum: 9033355e7449050938bbad2c0dc036baf9f2110bea230374966d4ad8f88b7f148020d323201fa5a8b0589400db522829bafea874ba6b6cb9954dc7d0dbc7b157
   conditions: (os=darwin | os=linux | os=win32 | os=freebsd | os=openbsd | os=netbsd | os=sunos | os=android)
+  languageName: node
+  linkType: hard
+
+"tailwind-merge@npm:^1.13.2":
+  version: 1.13.2
+  resolution: "tailwind-merge@npm:1.13.2"
+  checksum: 0b4bac1c45769c099336ec767fad6e3ed559e9037d3e70bfafd820b2f8139dbaf6dec03e24b1a60ad38dceaa0272573175472ae7498fd745e97792195ea184f6
+  languageName: node
+  linkType: hard
+
+"tailwindcss-animate@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "tailwindcss-animate@npm:1.0.6"
+  peerDependencies:
+    tailwindcss: "*"
+  checksum: 2d8589be6da9253c234b4e62273f95165235e560eaf5e995d865cd8d40bd2f79818a84f2e8fb56ccbe62c8ecbd5944a261fa297b3a9cf76b049582d4da0b988e
   languageName: node
   linkType: hard
 
@@ -26529,6 +27016,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tiny-case@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "tiny-case@npm:1.0.3"
+  checksum: c0cbed35884a322265e2cd61ff435168d1ea523f88bf3864ce14a238ae9169e732649776964283a66e4eb882e655992081d4daf8c865042e2233425866111b35
+  languageName: node
+  linkType: hard
+
 "tiny-lru@npm:^11.0.0, tiny-lru@npm:^11.0.1":
   version: 11.0.1
   resolution: "tiny-lru@npm:11.0.1"
@@ -26642,6 +27136,13 @@ __metadata:
   version: 1.0.1
   resolution: "toidentifier@npm:1.0.1"
   checksum: 93937279934bd66cc3270016dd8d0afec14fb7c94a05c72dc57321f8bd1fa97e5bea6d1f7c89e728d077ca31ea125b78320a616a6c6cd0e6b9cb94cb864381c1
+  languageName: node
+  linkType: hard
+
+"toposort@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "toposort@npm:2.0.2"
+  checksum: ab9ca91fce4b972ccae9e2f539d755bf799a0c7eb60da07fd985fce0f14c159ed1e92305ff55697693b5bc13e300f5417db90e2593b127d421c9f6c440950222
   languageName: node
   linkType: hard
 
@@ -26993,6 +27494,20 @@ __metadata:
     media-typer: 0.3.0
     mime-types: ~2.1.24
   checksum: a23daeb538591b7efbd61ecf06b6feb2501b683ffdc9a19c74ef5baba362b4347e42f1b4ed81f5882a8c96a3bfff7f93ce3ffaf0cbbc879b532b04c97a55db9d
+  languageName: node
+  linkType: hard
+
+"type@npm:^1.0.1":
+  version: 1.2.0
+  resolution: "type@npm:1.2.0"
+  checksum: 444660849aaebef8cbb9bc43b28ec2068952064cfce6a646f88db97aaa2e2d6570c5629cd79238b71ba23aa3f75146a0b96e24e198210ee0089715a6f8889bf7
+  languageName: node
+  linkType: hard
+
+"type@npm:^2.7.2":
+  version: 2.7.2
+  resolution: "type@npm:2.7.2"
+  checksum: 84c2382788fe24e0bc3d64c0c181820048f672b0f06316aa9c7bdb373f8a09f8b5404f4e856bc4539fb931f2f08f2adc4c53f6c08c9c0314505d70c29a1289e1
   languageName: node
   linkType: hard
 
@@ -27576,6 +28091,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"utf-8-validate@npm:^5.0.2":
+  version: 5.0.10
+  resolution: "utf-8-validate@npm:5.0.10"
+  dependencies:
+    node-gyp: latest
+    node-gyp-build: ^4.3.0
+  checksum: 23cd6adc29e6901aa37ff97ce4b81be9238d0023c5e217515b34792f3c3edb01470c3bd6b264096dd73d0b01a1690b57468de3a24167dd83004ff71c51cc025f
+  languageName: node
+  linkType: hard
+
 "util-deprecate@npm:^1.0.1, util-deprecate@npm:^1.0.2, util-deprecate@npm:~1.0.1":
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
@@ -27975,7 +28500,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web@workspace:web":
+"web@workspace:^, web@workspace:web":
   version: 0.0.0-use.local
   resolution: "web@workspace:web"
   dependencies:
@@ -27984,11 +28509,16 @@ __metadata:
     "@heroicons/react": ^2.0.18
     "@radix-ui/react-icons": ^1.3.0
     "@radix-ui/react-toggle": ^1.0.3
+    "@redwoodjs/auth-supabase-web": 5.4.2
     "@redwoodjs/forms": 5.4.2
     "@redwoodjs/router": 5.4.2
     "@redwoodjs/web": 5.4.2
+    "@supabase/supabase-js": ^2
     autoprefixer: ^10.4.14
+    class-variance-authority: ^0.6.1
+    clsx: ^1.2.1
     daisyui: latest
+    lucide-react: ^0.260.0
     postcss: ^8.4.25
     postcss-loader: ^7.3.3
     prop-types: 15.8.1
@@ -27997,7 +28527,9 @@ __metadata:
     react-markdown: ^8.0.7
     rehype-katex: ^6.0.3
     remark-math: ^5.1.1
+    tailwind-merge: ^1.13.2
     tailwindcss: ^3.3.2
+    tailwindcss-animate: ^1.0.6
     theme-change: ^2.5.0
     timeago.js: ^4.0.2
   languageName: unknown
@@ -28411,6 +28943,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"websocket@npm:^1.0.34":
+  version: 1.0.34
+  resolution: "websocket@npm:1.0.34"
+  dependencies:
+    bufferutil: ^4.0.1
+    debug: ^2.2.0
+    es5-ext: ^0.10.50
+    typedarray-to-buffer: ^3.1.5
+    utf-8-validate: ^5.0.2
+    yaeti: ^0.0.6
+  checksum: a7e17d24edec685fdf055940ff9c6a15e726df5bb5e537382390bd1ab978fc8c0d71cd2842bb628e361d823aafd43934cc56aa5b979d08e52461be7da8d01eee
+  languageName: node
+  linkType: hard
+
 "whatwg-encoding@npm:^2.0.0":
   version: 2.0.0
   resolution: "whatwg-encoding@npm:2.0.0"
@@ -28761,6 +29307,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"yaeti@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "yaeti@npm:0.0.6"
+  checksum: 4e88702d8b34d7b61c1c4ec674422b835d453b8f8a6232be41e59fc98bc4d9ab6d5abd2da55bab75dfc07ae897fdc0c541f856ce3ab3b17de1630db6161aa3f6
+  languageName: node
+  linkType: hard
+
 "yallist@npm:^3.0.2":
   version: 3.1.1
   resolution: "yallist@npm:3.1.1"
@@ -28905,6 +29458,18 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: dceb44c28578b31641e13695d200d34ec4ab3966a5729814d5445b194933c096b7ced71494ce53a0e8820685d1d010df8b2422e5bf2cdea7e469d97ffbea306f
+  languageName: node
+  linkType: hard
+
+"yup@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "yup@npm:1.2.0"
+  dependencies:
+    property-expr: ^2.0.5
+    tiny-case: ^1.0.3
+    toposort: ^2.0.2
+    type-fest: ^2.19.0
+  checksum: fa9f5491ab87e35a9c9cd5296992586850b9524853d52444dfe794a375df880a01b35c5c0364be457a9952f230ea9dd2a6f28d084c29b90abab9fdd84ee6f4c1
   languageName: node
   linkType: hard
 

@@ -19,11 +19,13 @@ const getMatchesFromEmbeddings = async (embeddings: number[], pinecone: Pinecone
     namespace: "airwallex",
   }
   console.log("Querying embeddings: ", queryRequest)
+  console.log("Size: ", queryRequest.vector.length)
   try {
     const queryResult = await index.query({
       queryRequest
     })
     console.log("Query result: ", queryResult)
+
     return queryResult.matches?.map(match => ({
       ...match,
       metadata: match.metadata as Metadata

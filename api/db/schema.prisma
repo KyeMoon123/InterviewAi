@@ -14,12 +14,32 @@ enum Speaker {
 }
 
 model Conversation {
+  id        String              @id @default(uuid())
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+  entries   ConversationEntry[]
+  userId    String
+  modelId   String
+  name      String?
+}
+
+model ConversationEntry {
+  id             String       @id @default(uuid())
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversationId String
+  speaker        Speaker
+  entry          String
+}
+
+model Model {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  speaker   Speaker
-  entry     String
-  userId    String?
+  name      String   @unique
+  version   String?
+  reviews   Review[]
 }
 
 model Review {
@@ -31,4 +51,17 @@ model Review {
   body              String
   source            String
   rating            Int?
+  Model             Model?    @relation(fields: [modelId], references: [id])
+  modelId           String?
+}
+
+model User {
+  id        String       @id
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  credits   Int
+  stripeId  String?      @unique
+  subscriptionId String?
+  subscriptionName String?
+  subscriptionStatus String?
 }

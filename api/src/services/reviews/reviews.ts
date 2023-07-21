@@ -64,9 +64,8 @@ export const sliceIntoChunks = (arr: Vector[], chunkSize: number) => {
   );
 };
 
-export const indexReviews = async (reviews:  CreateReviewInput[], source:string) => {
+export const indexReviews = async (reviews:  CreateReviewInput[], source:string, modelName: string) => {
   const indexName = "test"
-  const companyName = "airwallex"
   const limiter = new Bottleneck({
     minTime: 50
   });
@@ -125,7 +124,7 @@ export const indexReviews = async (reviews:  CreateReviewInput[], source:string)
         await index!.upsert({
           upsertRequest: {
             vectors: chunk as Vector[],
-            namespace: companyName,
+            namespace: modelName,
           }
         })
       }))

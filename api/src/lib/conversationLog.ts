@@ -9,18 +9,19 @@ type ConversationLogEntry = {
 
 class ConversationLog {
   constructor(
-    public userId: string,
+    public conversationId: string,
   ) {
-    this.userId = userId
+    this.conversationId = conversationId
   }
+
 
   public async addEntry({ entry, speaker }: { entry: string, speaker: Speaker }) {
     try {
-      await db.conversation.create({
+      await db.conversationEntry.create({
         data: {
           entry: entry,
           speaker: speaker,
-          userId: this.userId
+          conversationId: this.conversationId
         }
       })
     } catch (e) {
@@ -28,10 +29,11 @@ class ConversationLog {
     }
   }
 
-  public async getConversation({ limit }: { limit: number }): Promise<string[]> {
-    const conversation = await db.conversation.findMany({
+  public async getConversation({ limit, speaker }: { limit: number, speaker? :Speaker }): Promise<string[]> {
+    const conversation = await db.conversationEntry.findMany({
       where: {
-        userId: this.userId
+        conversationId: this.conversationId,
+        ...(speaker && { speaker: speaker })
       },
       orderBy: {
         createdAt: 'desc'
@@ -40,7 +42,8 @@ class ConversationLog {
         entry: true,
         speaker: true,
         createdAt: true,
-      }
+      },
+      take: limit
     })
 
     const history = conversation as ConversationLogEntry[]
@@ -50,14 +53,14 @@ class ConversationLog {
     }).reverse()
   }
 
-  public async clearConversation() {
-    //await sequelize.query(`DELETE FROM conversations WHERE user_id = '${this.userId}'`);
-    await db.conversation.deleteMany({
-      where: {
-        userId: this.userId
-      }
-    })
-  }
+  // public async clearConversation() {
+  //   //await sequelize.query(`DELETE FROM conversations WHERE user_id = '${this.userId}'`);
+  //   await db.conversation.deleteMany({
+  //     where: {
+  //       userId: this.userId
+  //     }
+  //   })
+  // }
 }
 
 export { ConversationLog }

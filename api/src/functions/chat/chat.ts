@@ -1,7 +1,6 @@
 import type {APIGatewayEvent, Context} from 'aws-lambda'
 
 import {logger} from 'src/lib/logger'
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import {PineconeClient} from "@pinecone-database/pinecone";
 import * as Ably from 'ably';
 import {CallbackManager} from "langchain/callbacks";
@@ -16,18 +15,15 @@ import {summarizeLongDocument} from "src/lib/summarizer";
 import {templates} from "src/lib/templates";
 import {getMatchesFromEmbeddings, Metadata} from "src/lib/matches";
 import {ConversationLog} from "src/lib/conversationLog";
+import {useRequireAuth} from "@redwoodjs/graphql-server";
+import {getCurrentUser} from "src/lib/auth";
+import {authDecoder} from "@redwoodjs/auth-supabase-api";
+import {PineConeService} from "src/lib/PineConeService";
+import {getUserCredits, updateUser} from "src/services/users/users";
 
 
 const llm = new OpenAI({});
 let pinecone: PineconeClient | null = null
-
-const initPineconeClient = async () => {
-  pinecone = new PineconeClient();
-  await pinecone.init({
-    environment: process.env.PINECONE_ENVIRONMENT!,
-    apiKey: process.env.PINECONE_API_KEY!,
-  });
-}
 
 const maxPublishRate = 15; // Maximum publish rate per second
 const tokenBatchSize = 10; // Number of tokens to send in each batch
@@ -39,27 +35,32 @@ let publishingTokens = false; // Flag to track if tokens are being published
 
 const ably = new Ably.Realtime({key: process.env.ABLY_API_KEY});
 
-export const handler = async (event: APIGatewayEvent, _context: Context) => {
-
-  const {prompt, userId} = JSON.parse(event.body);
-
-  logger.info(`${event.httpMethod} ${event.path}: chat function`)
-  if (!pinecone) {
-    await initPineconeClient();
+export const chatHandler = async (event: APIGatewayEvent, _context: Context) => {
+  const {prompt, modelName, modelId, conversationId} = JSON.parse(event.body);
+  const userId = String(context.currentUser.sub)
+  logger.info(`querying model ${modelName} with id ${modelId} for user ${String(context.currentUser.sub)} and conversation ${conversationId} with prompt ${prompt} `)
+  const userCredits = await getUserCredits(userId)
+  if (userCredits < 1) {
+    return {
+      statusCode: 402,
+      body: JSON.stringify({
+        error: 'Insufficient credits, please upgrade your plan or purchase additional credits'
+      })
+    }
   }
-  let summarizedCount = 0;
+
+  if (!pinecone) {
+    pinecone = await PineConeService.initPineconeClient()
+  }
 
   try {
     const channel = ably.channels.get(userId);
     const interactionId = uuid()
 
-
     // Retrieve the conversation log and save the user's prompt
-    const conversationLog = new ConversationLog(userId)
-    const conversationHistory = await conversationLog.getConversation({limit: 10})
+    const conversationLog = new ConversationLog(conversationId)
+    const conversationHistory = await conversationLog.getConversation({limit: 10, speaker: "user"})
     await conversationLog.addEntry({entry: prompt, speaker: "user"})
-
-    console.log(conversationHistory)
 
     // Build an LLM chain that will improve the user prompt
     const inquiryChain = new LLMChain({
@@ -71,15 +72,13 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
     const inquiryChainResult = await inquiryChain.call({userPrompt: prompt, conversationHistory})
     const inquiry = inquiryChainResult.text
 
-    console.log(inquiry)
-
     // Embed the user's intent and query the Pinecone index
     const embedder = new OpenAIEmbeddings({
       modelName: "text-embedding-ada-002"
     });
 
-
     const embeddings = await embedder.embedQuery(inquiry);
+
     channel.publish({
       data: {
         event: "status",
@@ -87,18 +86,15 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
       }
     })
 
-    const matches = await getMatchesFromEmbeddings(embeddings, pinecone!, 2);
-    console.log(matches)
+    // take the embeddings and find the top 2 matches in the pinecone index
+    const matches = await getMatchesFromEmbeddings(embeddings, pinecone!, 3);
 
-
-    const urls = matches && Array.from(new Set(matches.map(match => {
-      const metadata = match.metadata as Metadata
-      const {url} = metadata
-      return url
-    })))
-
-    console.log(urls)
-
+    //   TODO: i am not using urls, change to review external references
+    //   const urls = matches && Array.from(new Set(matches.map(match => {
+    //     const metadata = match.metadata as Metadata
+    //     const {url} = metadata
+    //     return url
+    //   })))
 
     const docs = matches && Array.from(
       matches.reduce((map, match) => {
@@ -111,12 +107,10 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
       }, new Map())
     ).map(([_, text]) => text);
 
-
     const promptTemplate = new PromptTemplate({
       template: templates.qaTemplate,
-      inputVariables: ["summaries", "question", "conversationHistory", "urls"],
+      inputVariables: ["summaries", "question", "conversationHistory"],
     });
-
 
     const chat = new ChatOpenAI({
       streaming: true,
@@ -134,10 +128,10 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
           if (!publishingTokens) {
             await publishTokens(channel, interactionId);
           }
+          await conversationLog.addEntry({entry: result.generations[0][0].text, speaker: "ai"})
         },
       }),
     });
-
 
     const chain = new LLMChain({
       prompt: promptTemplate,
@@ -160,14 +154,17 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
       summaries: summary,
       question: prompt,
       conversationHistory,
-      urls
     });
-
-
   } catch (error) {
-    //@ts-ignore
     console.error(error)
   }
+
+  await updateUser({
+    id: userId,
+    input: {
+      credits: (userCredits - 1)
+    }
+  })
 
   return {
     statusCode: 200,
@@ -180,28 +177,50 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
   }
 }
 
-const publishTokens = async (channel,interactionId) => {
+export const handler = useRequireAuth({
+  handlerFn: chatHandler,
+  getCurrentUser,
+  authDecoder,
+})
+
+
+// UTIL FUNCTIONS - Should move out somewhere neater
+
+const publishTokens = async (channel, interactionId) => {
   publishingTokens = true;
   while (tokenBatch.length > 0) {
     const batch = tokenBatch.slice(0, tokenBatchSize); // Extract a batch of tokens
     tokenBatch = tokenBatch.slice(tokenBatchSize); // Remove the published tokens from the batch
-    await publishBatch(channel,batch, interactionId); // Publish the batch of tokens
+    await publishBatch(channel, batch, interactionId); // Publish the batch of tokens
     await delay(tokenBatchDelay); // Delay between batches
   }
   publishingTokens = false;
 };
 
-const publishBatch = async (channel,batch, interactionId) => {
+const publishBatch = async (channel, batch, interactionId) => {
   for (const token of batch) {
-    const data = {
-      event: "response",
-      token: token,
-      interactionId,
-    };
+    let data
+    if (token === "END") {
+      data = {
+        event: "responseEnd",
+        token: token,
+        interactionId,
+      };
+      channel.publish({data}); // Publish "END" token
+      continue;
+    } else {
+      data = {
+        event: "response",
+        token: token,
+        interactionId,
+      }
+    }
 
-    channel.publish({ data }); // Publish each token separately
+    channel.publish({data}); // Publish each token separately
     await delay(tokenBatchDelay); // Delay between publishing tokens to maintain rate limit
   }
 };
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+

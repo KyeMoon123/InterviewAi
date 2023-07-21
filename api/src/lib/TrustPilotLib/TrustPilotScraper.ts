@@ -2,7 +2,6 @@ import puppeteer, {Page} from "puppeteer-core";
 import {TrustPilotReview} from "src/lib/TrustPilotLib/interfaces";
 import _ from "lodash";
 import {logger} from "src/lib/logger";
-import {TrustPilotService} from "src/lib/TrustPilotLib/TrustPilotService";
 
 export const trustPilotScraper = (function () {
   const auth = 'brd-customer-hl_70da15bc-zone-zone3:imqnakbigdg4';
@@ -37,6 +36,33 @@ export const trustPilotScraper = (function () {
     }
   }
 
+  const scrapePage = async (url: string): Promise<TrustPilotReview[] | undefined> => {
+    let browser;
+    let pageReviews: TrustPilotReview[] = [];
+    try {
+      browser = await puppeteer.connect({
+        browserWSEndpoint: `wss://${auth}@zproxy.lum-superproxy.io:9222`,
+      });
+      const page = await browser.newPage();
+      page.setDefaultNavigationTimeout(2 * 60 * 1000);
+      await page.goto(`${url}?&sort=recency`)
+      try {
+        pageReviews = await getPageReviews({
+          page: page,
+        });
+      } catch (e) {
+        logger.error('failed to get page reviews', e)
+        pageReviews = undefined;
+      }
+    } catch (e) {
+      throw new Error('failed while fetching pagination URLs', e);
+    } finally {
+      await browser?.close();
+    }
+    return pageReviews
+  }
+
+
   /**
    * @description Scrape an array of URLs and return the reviews for each page
    * @param urls - array of pagination URLs
@@ -60,20 +86,20 @@ export const trustPilotScraper = (function () {
       const page = await browser.newPage();
       page.setDefaultNavigationTimeout(2 * 60 * 1000);
 
-        for (const [index, url] of _.entries(urls)) {
-          logger.info(`Scraping page ${parseInt(index) + 1} of ${urls.length}`)
-          let pageReviews;
-          await page.goto(url)
-          try {
-            pageReviews = await getPageReviews({
-              page: page,
-            });
-          } catch (e) {
-            logger.error('failed to get page reviews', e)
-            return reviews
-          }
-            reviews.push(...pageReviews);
+      for (const [index, url] of _.entries(urls)) {
+        logger.info(`Scraping page ${parseInt(index) + 1} of ${urls.length}`)
+        let pageReviews;
+        await page.goto(url)
+        try {
+          pageReviews = await getPageReviews({
+            page: page,
+          });
+        } catch (e) {
+          logger.error('failed to get page reviews', e)
+          return reviews
         }
+        reviews.push(...pageReviews);
+      }
     } catch (e) {
     } finally {
       await browser?.close();
@@ -89,7 +115,7 @@ export const trustPilotScraper = (function () {
   const getPageReviews = async ({
                                   page,
 
-                                }: { page: Page}): Promise<TrustPilotReview[]> => {
+                                }: { page: Page }): Promise<TrustPilotReview[]> => {
 
     return await page.evaluate(() => {
       const cards: TrustPilotReview[] = [];
@@ -150,6 +176,7 @@ export const trustPilotScraper = (function () {
 
   return {
     scrapeUrls,
+    scrapePage,
     getUrlsForAllReviewPages
   }
 })();
