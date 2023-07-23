@@ -1,5 +1,4 @@
 import type { APIGatewayEvent, Context } from 'aws-lambda'
-
 import { logger } from 'src/lib/logger'
 import {
   getStripeEvent,
@@ -30,6 +29,7 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
   const sig = event.headers['stripe-signature']
   logger.info(`sig: ${sig}`)
   let stripeEvent
+
   try {
     stripeEvent = await getStripeEvent(sig, event.body)
   } catch (err) {
