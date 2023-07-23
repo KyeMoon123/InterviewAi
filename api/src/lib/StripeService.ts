@@ -3,7 +3,7 @@ import {db} from "src/lib/db";
 const Stripe = require('stripe')
 
 const stripe = Stripe("sk_test_51NU6MuHjkj0WoObL0VePy1f0xdIe7iF2xVK8T1tlLTHQNkwoWfxGCn19n6ANz1gP7ipHwVYeHC7ZLwrQkVPo7wnz00ohRki5rs");
-const endpointSecret = "whsec_7c8939f4937ffa667cf0f13cafce6d393a2e8875cf61cc54e63a41e1c7af589e";
+
 
 const URL = `${process.env.PROTOCOL}${process.env.REDWOOD_ENV_VERCEL_URL}`
 
@@ -67,7 +67,7 @@ export const getStripeSubscription = ({ id }) => {
 }
 
 export const getStripeEvent = async (sig, body) => {
-  return await stripe.webhooks.constructEvent(body, sig, endpointSecret)
+  return await stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET)
 }
 
 export const handleCustomerSubscriptionCreated = async (stripeEvent) => {
