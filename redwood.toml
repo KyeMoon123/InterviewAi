@@ -9,7 +9,7 @@
   title = "Redwood App"
   port = 8910
   apiUrl = "/api"
-  includeEnvironmentVariables = ["SUPABASE_URL", "SUPABASE_KEY"]
+  includeEnvironmentVariables = ["SUPABASE_URL", "SUPABASE_KEY", "UI_FUNCTIONS_SRC"]
 [api]
   port = 8911
 [browser]
