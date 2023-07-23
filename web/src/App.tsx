@@ -15,7 +15,7 @@ const clientId =
   Math.random().toString(36).substring(2, 15);
 
 configureAbly({
-  authUrl: `http://localhost:8910/api/ablyTokenRequest?clientId=${clientId}`,
+  authUrl: `${[process.env.UI_FUNCTIONS_SRC]}/ablyTokenRequest?clientId=${clientId}`,
   clientId: clientId,
 });
 
