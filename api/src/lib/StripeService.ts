@@ -1,4 +1,5 @@
 import {db} from "src/lib/db";
+import {logger} from "src/lib/logger";
 
 const Stripe = require('stripe')
 
@@ -67,6 +68,9 @@ export const getStripeSubscription = ({ id }) => {
 }
 
 export const getStripeEvent = async (sig, body) => {
+  logger.info("getStripeEvent")
+  logger.info(`sig: ${sig}, body: ${body}, secret: ${process.env.STRIPE_WEBHOOK_SECRET}`)
+
   return await stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET)
 }
 
@@ -81,7 +85,6 @@ export const handleCustomerSubscriptionCreated = async (stripeEvent) => {
     throw new Error(`User not found: ${subscription.customer}`)
   }
 
-  console.log('subscription', subscription)
   await db.user.update({
     where: { id: user.id },
     data: {

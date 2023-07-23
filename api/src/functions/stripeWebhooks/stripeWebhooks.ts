@@ -28,6 +28,7 @@ import {
 export const handler = async (event: APIGatewayEvent, _context: Context) => {
   logger.info(`${event.httpMethod} ${event.path}: stripeWebhooks function`)
   const sig = event.headers['stripe-signature']
+  logger.info(`sig: ${sig}`)
   let stripeEvent
   try {
     stripeEvent = await getStripeEvent(sig, event.body)
