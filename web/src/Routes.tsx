@@ -17,9 +17,7 @@ const Routes = () => {
   return (
 
     <Router useAuth={useAuth}>
-
       <Route path="/login" page={LoginPage} name="login"/>
-      <Route path="/admin" page={AdminPage} name="admin"/>
       <AppLayout>
         <Route path="/success" page={CheckoutSuccessPage} name="checkoutSuccess" />
         <Route path="/pricing" page={PricingPage} name="pricing" />
@@ -31,7 +29,9 @@ const Routes = () => {
           <Route path="/chat" page={ChatPage} name="chat"/>
         </ChatLayout>
       </Private>
-
+      <Private roles={['admin']} unauthenticated={"login"}>
+        <Route path="/admin" page={AdminPage} name="admin"/>
+      </Private>
       <Route notfound page={NotFoundPage}/>
     </Router>
   )

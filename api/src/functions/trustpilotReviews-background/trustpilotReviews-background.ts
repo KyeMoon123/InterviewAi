@@ -4,6 +4,12 @@ import {logger} from "src/lib/logger";
 import { PromisePool } from '@supercharge/promise-pool'
 import {batchSaveReviews, indexReviews, removeExistingReviews} from "src/services/reviews/reviews";
 import {trustPilotScraper} from "src/lib/TrustPilotLib/TrustPilotScraper";
+import {useRequireAuth} from "@redwoodjs/graphql-server";
+import {getCurrentUser} from "src/lib/auth";
+import {authDecoder} from "@redwoodjs/auth-supabase-api";
+import {checkoutHandler} from "src/functions/checkout/checkout";
+import {verifySignature} from "@redwoodjs/api/webhooks";
+import {verifyWebhook} from "src/lib/utils";
 
 /**
  *
@@ -11,7 +17,8 @@ import {trustPilotScraper} from "src/lib/TrustPilotLib/TrustPilotScraper";
  * @param _context
  * function, and execution environment.
  */
-export const handler = async (event: APIGatewayEvent, _context: Context) => {
+export const trustPilotScrapingHandler = async (event: APIGatewayEvent, _context: Context) => {
+  await verifyWebhook(event)
   const {url, modelName} = JSON.parse(event.body);
   try {
 
@@ -70,3 +77,9 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
     }
   }
 }
+
+export const handler = useRequireAuth({
+  handlerFn: trustPilotScrapingHandler,
+  getCurrentUser,
+  authDecoder,
+})

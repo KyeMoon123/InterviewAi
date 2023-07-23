@@ -1,14 +1,14 @@
-import { FatalErrorBoundary, RedwoodProvider } from '@redwoodjs/web'
-import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
+import {FatalErrorBoundary, RedwoodProvider} from '@redwoodjs/web'
+import {RedwoodApolloProvider} from '@redwoodjs/web/apollo'
 
 import FatalErrorPage from 'src/pages/FatalErrorPage'
 import Routes from 'src/Routes'
 
 import './index.css'
-import {configureAbly} from "@ably-labs/react-hooks";
-import { Toaster } from '@redwoodjs/web/toast'
+import {Toaster} from '@redwoodjs/web/toast'
 
 import { AuthProvider, useAuth } from './auth'
+import {configureAbly} from "@ably-labs/react-hooks";
 
 const clientId =
   Math.random().toString(36).substring(2, 15) +
@@ -16,7 +16,7 @@ const clientId =
 
 configureAbly({
   authUrl: `http://localhost:8910/api/ablyTokenRequest?clientId=${clientId}`,
-  clientId: '123',
+  clientId: clientId,
 });
 
 const App = () => (
@@ -24,8 +24,8 @@ const App = () => (
     <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
       <AuthProvider>
         <RedwoodApolloProvider useAuth={useAuth}>
-          <Toaster />
-          <Routes />
+          <Toaster/>
+          <Routes/>
         </RedwoodApolloProvider>
       </AuthProvider>
     </RedwoodProvider>

@@ -29,3 +29,25 @@ export const updateChatbotMessage = (
       },
     ];
 };
+
+export const sendChatMessage = async ({token, body}:{token:string, body:any}):Promise<Response> => {
+  return await fetch(`${process.env.UI_FUNCTIONS_SRC}/chat`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+      "auth-provider": "supabase"
+    },
+    body: JSON.stringify(body),
+  })
+}
+
+export const stripeCheckout = async ({token, planType}:{token:string, planType:string}):Promise<Response> => {
+  return  await fetch(`${process.env.UI_FUNCTIONS_SRC}/checkout?plan=${planType}`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "auth-provider": "supabase"
+    },
+  })
+}

@@ -3,10 +3,14 @@ import Chat from "src/components/Chat/Chat";
 import {useAuth} from "src/auth";
 import ModelsPanel from "src/components/ModelsPanel/ModelsPanel";
 import ModelConversationsPanel from "src/components/ModelConversationsPanel/ModelConversationsPanel";
-
+import {configureAbly} from "@ably-labs/react-hooks";
+import {useEffect} from "react";
 
 const ChatPage = () => {
   const {currentUser} = useAuth()
+
+
+
   return (
     <>
       <MetaTags title="Chat" description="Chat page"/>

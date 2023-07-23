@@ -1,5 +1,6 @@
 import {MutationResolvers} from "types/graphql";
 import {modelRepository} from "src/services/models/models";
+import {signPayload} from "@redwoodjs/api/webhooks";
 
 export const triggerScrape: MutationResolvers['triggerScrape'] = async ({url, modelName, source}) => {
   let model = await modelRepository.findModelByName(modelName.toLowerCase());
@@ -28,13 +29,24 @@ const triggerBySource =  (source, url, modelName) => {
 }
 
 const scrapeTrustPilot =  async (url, modelName) => {
+  const body = {
+    url: url,
+    modelName: modelName
+  }
+
+  const signature =  signPayload('sha256Verifier', {
+    payload: JSON.stringify(body),
+    secret: process.env.WEBHOOK_SECRET,
+  })
+
   try {
     await fetch("http://localhost:8911/trustpilotReviews-background", {
       method: 'POST',
-      body: JSON.stringify({
-        url: url,
-        modelName: modelName
-      })
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+        'internal-Webhook-Signature': signature
+      }
     });
   } catch (error) {
     console.log(error)

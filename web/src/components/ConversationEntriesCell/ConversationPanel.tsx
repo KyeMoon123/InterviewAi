@@ -4,16 +4,16 @@ import {useAuth} from "src/auth";
 import {ModelContext} from "src/context/ModelProvider";
 import {ConversationContext} from "src/context/ConversationProvider";
 import {useChannel} from "@ably-labs/react-hooks";
-import {updateChatbotMessage} from "src/Utils";
+import {sendChatMessage, updateChatbotMessage} from "src/Utils";
 import {toast} from "@redwoodjs/web/toast";
 import ChatInput from "src/components/ChatInput/ChatInput";
 import {ConversationEntry} from "types/graphql";
 
 export interface ConversationProps {
-conversationEntries: Partial<ConversationEntry>[];
+  conversationEntries: Partial<ConversationEntry>[];
 }
 
-export const ConversationPanel = ({conversationEntries}:ConversationProps) => {
+export const ConversationPanel = ({conversationEntries}: ConversationProps) => {
 
   const [text, setText] = useState("");
   const [localConversation, setLocalConversation] = useState<Partial<ConversationEntry>[]>(conversationEntries);
@@ -53,21 +53,16 @@ export const ConversationPanel = ({conversationEntries}:ConversationProps) => {
     try {
       setDisableInput(true)
       setIsThinking(true)
-      const response = await fetch("http://localhost:8910/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${await getToken()}`,
-          "auth-provider": "supabase"
-        },
-        body: JSON.stringify({
+      const response = await sendChatMessage({
+        token: await getToken(),
+        body: {
           prompt: text,
           modelId: model.id,
           modelName: model.name,
           conversationId: conversation.id,
-        }),
-      });
-      const json = await response.json();
+        }
+      })
+      const json = await response.json()
       if (json.error) {
         toast.error(json.error)
       }
@@ -75,9 +70,8 @@ export const ConversationPanel = ({conversationEntries}:ConversationProps) => {
     } catch (error) {
       console.error("Error submitting message:", error);
     } finally {
-
+      setText("");
     }
-    setText("");
   };
 
   return (

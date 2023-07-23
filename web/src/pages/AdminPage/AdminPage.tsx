@@ -17,12 +17,7 @@ const AdminPage = () => {
     }
   `
 
-  const [triggerScrape, { data, loading, error }] = useMutation(TRIGGER_SCRAPE, {
-    variables: {
-      url: link,
-      modelName: modelName,
-      source: source
-    },
+  const [triggerScrape, {data, loading, error}] = useMutation(TRIGGER_SCRAPE, {
     onCompleted: (data) => {
       toast.success(data.triggerScrape.message)
     },
@@ -34,7 +29,7 @@ const AdminPage = () => {
 
   return (
     <>
-      <MetaTags title="Admin" description="Admin page" />
+      <MetaTags title="Admin" description="Admin page"/>
       <div className={'bg-base-300 h-screen space-y-8'}>
         <h1 className={'text-xl'}>Admin: Dont break shit pls</h1>
         <div className=" bg-base-200 py-12 px-20">
@@ -42,12 +37,21 @@ const AdminPage = () => {
             Scrape trust pilot
             <form>
               <div className={'space-x-12'}>
-                <input onChange={(event)=>{setLink(event.target.value)}} type="text" placeholder="Type Link Here" className="input input-bordered w-full max-w-md" />
-                <input onChange={(event) => {setModelName(event.target.value)}} type={'text'} placeholder={"Model name"} className="input input-bordered w-1/2 max-w-md"/>
+                <input onChange={(event) => {
+                  setLink(event.target.value)
+                }} type="text" placeholder="Type Link Here" className="input input-bordered w-full max-w-md"/>
+                <input onChange={(event) => {
+                  setModelName(event.target.value)
+                }} type={'text'} placeholder={"Model name"} className="input input-bordered w-1/2 max-w-md"/>
                 <button className={'btn btn-primary'} onClick={async (e) => {
                   e.preventDefault()
-                  setSource("TRUST_PILOT")
-                  await triggerScrape()
+                  await triggerScrape({
+                    variables: {
+                      url: link,
+                      modelName: modelName,
+                      source: "TRUST_PILOT"
+                    }
+                  })
                 }}>
                   Submit
                 </button>

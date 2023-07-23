@@ -1,7 +1,7 @@
-import type { APIGatewayEvent, Context } from 'aws-lambda'
+import type {APIGatewayEvent, Context} from 'aws-lambda'
 import Ably from "ably/promises";
 
-import { logger } from 'src/lib/logger'
+import {logger} from 'src/lib/logger'
 
 /**
  * The handler function is your code that processes http request events.
@@ -20,17 +20,20 @@ import { logger } from 'src/lib/logger'
  * function, and execution environment.
  */
 
-let options: Ably.Types.ClientOptions = { key: process.env.ABLY_API_KEY };
+let options: Ably.Types.ClientOptions = {key: process.env.ABLY_API_KEY};
 export const handler = async (event: APIGatewayEvent, _context: Context) => {
   logger.info(`${event.httpMethod} ${event.path}: ablyTokenRequest function`)
+
   const client = new Ably.Realtime(options);
-  const tokenRequestData = await client.auth.createTokenRequest({ clientId: event.queryStringParameters?.clientId as string });
-  console.log(tokenRequestData);
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(tokenRequestData),
-    }
+  const tokenRequestData = await client.auth.createTokenRequest({clientId: event.queryStringParameters?.clientId});
+
+  logger.info(`tokenRequestData: ${JSON.stringify(tokenRequestData)}`)
+
+  return {
+    statusCode: 200,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(tokenRequestData),
+  }
 }

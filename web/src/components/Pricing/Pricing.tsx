@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {useAuth} from "src/auth";
 import {toast} from "@redwoodjs/web/toast";
 import {useLazyQuery} from "@apollo/client";
+import {stripeCheckout} from "src/Utils";
 
 interface PricingCardProps {
   planName: string,
@@ -69,13 +70,7 @@ const Pricing = () => {
 
   const checkout = async (planType) => {
 
-    const response = await fetch(`http://localhost:8910/api/checkout?plan=${planType}`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${await getToken()}`,
-        "auth-provider": "supabase"
-      },
-    })
+    const response = await stripeCheckout({token: await getToken(), planType})
     const {sessionUrl} = await response.json()
 
     if (sessionUrl) {
@@ -108,7 +103,6 @@ const Pricing = () => {
       navigate(routes.login())
     } else {
       if (data.user.subscriptionId) {
-        console.log(data.user.subscriptionName)
         setCurrentPlanType(data.user.subscriptionName)
         setNewPlanType(planType)
         // @ts-ignore
