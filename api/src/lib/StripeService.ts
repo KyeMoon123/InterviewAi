@@ -3,8 +3,9 @@ import {db} from "src/lib/db";
 const Stripe = require('stripe')
 
 const stripe = Stripe("sk_test_51NU6MuHjkj0WoObL0VePy1f0xdIe7iF2xVK8T1tlLTHQNkwoWfxGCn19n6ANz1gP7ipHwVYeHC7ZLwrQkVPo7wnz00ohRki5rs");
-const DOMAIN = process.env.DOMAIN
 const endpointSecret = "whsec_7c8939f4937ffa667cf0f13cafce6d393a2e8875cf61cc54e63a41e1c7af589e";
+
+const URL = `${process.env.PROTOCOL}${process.env.REDWOOD_ENV_VERCEL_URL}`
 
 export const newUserSession = async ({priceId}) => {
   return await stripe.checkout.sessions.create({
@@ -15,8 +16,8 @@ export const newUserSession = async ({priceId}) => {
       },
     ],
     mode: 'subscription',
-    success_url: `${DOMAIN}/success?session_id={CHECKOUT_SESSION_ID}&user_id=${context.currentUser.sub}`,
-    cancel_url: `${DOMAIN}?canceled=true`,
+    success_url: `${URL}/success?session_id={CHECKOUT_SESSION_ID}&user_id=${context.currentUser.sub}`,
+    cancel_url: `${URL}?canceled=true`,
     metadata: {
       userId: context.currentUser.sub
     }
@@ -33,8 +34,8 @@ export const existingUserSession = async ({stripeId, priceId}) => {
     ],
     customer: stripeId,
     mode: 'subscription',
-    success_url: `${DOMAIN}/success?session_id={CHECKOUT_SESSION_ID}&user_id=${context.currentUser.sub}`,
-    cancel_url: `${DOMAIN}?canceled=true`,
+    success_url: `${URL}/success?session_id={CHECKOUT_SESSION_ID}&user_id=${context.currentUser.sub}`,
+    cancel_url: `${URL}?canceled=true`,
     metadata: {
       userId: context.currentUser.sub
     }
