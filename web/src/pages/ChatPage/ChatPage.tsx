@@ -10,14 +10,16 @@ const ChatPage = () => {
   return (
     <>
       <MetaTags title="Chat" description="Chat page"/>
-      <div className="sidebar-1 h-screen">
-        <ModelsPanel/>
-      </div>
-      <div className="content flex-1 overflow-hidden ">
-        <Chat/>
-      </div>
-      <div className="sidebar-2  h-screen ">
-        <ModelConversationsPanel/>
+      <div className={'w-full flex h-screen'}>
+        <div className="sidebar-1">
+          <ModelsPanel/>
+        </div>
+        <div className="flex-1 flex-col h-full">
+          <Chat/>
+        </div>
+        <div className="sidebar-2 ">
+          <ModelConversationsPanel/>
+        </div>
       </div>
     </>
   )

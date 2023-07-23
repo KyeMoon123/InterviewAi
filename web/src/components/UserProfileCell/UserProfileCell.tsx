@@ -7,12 +7,19 @@ export const QUERY = gql`
     user: user(id: $id) {
       id
       subscriptionName
+      subscriptionId
       credits
     }
   }
 `
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => {
+  return (
+    <div className={'flex  h-full w-full place-content-center'}>
+      <span className=" text-primary loading loading-dots loading-lg"></span>
+    </div>
+  )
+}
 
 export const Empty = () => <div>Empty</div>
 

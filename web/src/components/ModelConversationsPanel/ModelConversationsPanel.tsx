@@ -17,7 +17,7 @@ const NEW_CONVERSATION = gql`
 
 const ModelConversationsPanel = () => {
   const {model} = useContext(ModelContext)
-  const {conversation, setConversation} = useContext(ConversationContext)
+  const {setConversation} = useContext(ConversationContext)
   const {currentUser} = useAuth()
   const [show, setShow] = useState(false)
   const [name, setName] = useState('')
@@ -25,7 +25,7 @@ const ModelConversationsPanel = () => {
 
   const [newConversation, {loading, error, data}] = useMutation(NEW_CONVERSATION, {
     onCompleted: (data) => {
-      toast.success('Conversation created')
+      toast.success('ConversationPanel created')
       setConversation(data.createConversation)
     },
     refetchQueries: ['ModelConversationsQuery'],
@@ -48,8 +48,8 @@ const ModelConversationsPanel = () => {
   return (
     <div>
       <div className="flex flex-col h-screen bg-base-300 w-72 pt-6 border-l border-base-100">
-        <div className={'flex space-x-4 place-content-center '}>
-          <h2 className={'flex justify-center  align-middle font-semibold'}>Conversations </h2>
+        <div className={'flex space-x-4 text-lg px-4'}>
+          <h2 className={'flex  align-middle font-semibold'}>Conversations </h2>
           <button onClick={() => setShow(!show)} className={'btn btn-sm '}>
             <PlusIcon className={'w-6'}/>
           </button>

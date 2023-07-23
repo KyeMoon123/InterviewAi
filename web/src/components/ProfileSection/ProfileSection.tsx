@@ -31,6 +31,7 @@ const ProfileSection = ({user}: ProfileSectionProps) => {
     refetchQueries: ['FindUserProfileQuery'],
     awaitRefetchQueries: true
   })
+
   const onConfirmCancelSubscription = async () => {
     try {
       toast.loading('Cancelling subscription...')
@@ -41,8 +42,12 @@ const ProfileSection = ({user}: ProfileSectionProps) => {
   }
 
   const onClickCancelSubscription = async () => {
-    // @ts-ignore
-    window.cancel_confirmation.showModal()
+    console.log(user)
+    {!user.subscriptionId ?
+    toast.error('You do not have an active subscription')
+    :     // @ts-ignore
+      window.cancel_confirmation.showModal()
+    }
   }
 
   return (
@@ -69,7 +74,7 @@ const ProfileSection = ({user}: ProfileSectionProps) => {
               <span className="text-lg font-medium text-base-content title-font mb-2">Current Subscription</span>
             </div>
             <div className="md:flex-grow pt-2">
-              <h2 className="text-4xl font-medium text-primary title-font mb-2">{user.subscriptionName}</h2>
+              <h2 className="text-4xl font-medium text-primary title-font mb-2">{user.subscriptionName ? user.subscriptionName : "Free" }</h2>
             </div>
             <div className={'grid grid-cols-3  gap-4 space-y-4 '}>
               <div className={'flex flex-col'}>

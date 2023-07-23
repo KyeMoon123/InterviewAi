@@ -4,8 +4,8 @@
 // ```tsx
 // import type { ComponentStory } from '@storybook/react'
 //
-// export const generated: ComponentStory<typeof Conversation> = (args) => {
-//   return <Conversation {...args} />
+// export const generated: ComponentStory<typeof ConversationPanel> = (args) => {
+//   return <ConversationPanel {...args} />
 // }
 // ```
 //
@@ -20,6 +20,6 @@ export const generated = () => {
 }
 
 export default {
-  title: 'Components/Conversation',
+  title: 'Components/ConversationPanel',
   component: Conversation,
 } as ComponentMeta<typeof Conversation>

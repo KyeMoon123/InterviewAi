@@ -1,18 +1,17 @@
 import {Types} from "ably";
-import {ConversationEntry} from "src/components/Conversation/Conversation";
-import {Speaker} from "lucide-react";
+import {ConversationEntry} from "types/graphql";
 
 export const updateChatbotMessage = (
-  conversation: ConversationEntry[],
+  conversation:Partial<ConversationEntry>[],
   message: Types.Message
-): ConversationEntry[] => {
+): Partial<ConversationEntry>[] => {
   const interactionId = message.data.interactionId;
 
   const updatedConversation = conversation.reduce(
     (acc: ConversationEntry[], e: ConversationEntry) => [
       ...acc,
       e.id === interactionId
-        ? {...e, message: e.message + message.data.token}
+        ? {...e, entry: e.entry + message.data.token}
         : e,
     ],
     []
@@ -24,9 +23,9 @@ export const updateChatbotMessage = (
       ...updatedConversation,
       {
         id: interactionId,
-        message: message.data.token,
+        entry: message.data.token,
         speaker: "ai",
-        date: new Date(),
+        createdAt: String(message.timestamp),
       },
     ];
 };

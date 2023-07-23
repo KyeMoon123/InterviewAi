@@ -13,19 +13,19 @@ const UPDATE_USER_STRIPE_ID = gql`
 
 const CheckoutSuccessPage = () => {
   const params = useParams()
-  const [updateUser] = useMutation(UPDATE_USER_STRIPE_ID, {
-    variables: {
-      id: params.user_id,
-      sessionId: params.session_id
-    }
-  })
-
-  useEffect(() => {
-    if (!params.user_id || !params.session_id) return
-    updateUser().then(() => {
-      toast.success('Subscription successful!')
-    })
-  }, [])
+  // const [updateUser] = useMutation(UPDATE_USER_STRIPE_ID, {
+  //   variables: {
+  //     id: params.user_id,
+  //     sessionId: params.session_id
+  //   }
+  // })
+  //
+  // useEffect(() => {
+  //   if (!params.user_id || !params.session_id) return
+  //   updateUser().then(() => {
+  //     toast.success('Subscription successful!')
+  //   })
+  // }, [])
 
   return (
     <>

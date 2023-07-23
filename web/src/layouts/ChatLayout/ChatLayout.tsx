@@ -11,7 +11,7 @@ const ChatLayout = ({children}: ChatLayoutProps) => {
   const [showModels, setShowModels] = useState(true);
 
   return (
-    <div className=" flex-1 flex h-screen ">
+    <div className="flex-1 flex max-h-screen">
       <Sidebar showModels={showModels} setShowModels={setShowModels}/>
       <ModelProvider>
         <ConversationProvider>

@@ -16,10 +16,6 @@ const ProfilePage = () => {
           <UserProfileCell id={String(currentUser.sub)}/>
         }
       </div>
-
-
-
-
     </>
   )
 }

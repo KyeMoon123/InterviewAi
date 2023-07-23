@@ -15,7 +15,7 @@ const clientId =
   Math.random().toString(36).substring(2, 15);
 
 configureAbly({
-  authUrl: `http://localhost:8910/.redwood/functions/ablyTokenRequest?clientId=${clientId}`,
+  authUrl: `http://localhost:8910/api/ablyTokenRequest?clientId=${clientId}`,
   clientId: '123',
 });
 

@@ -1,5 +1,5 @@
 import {navigate, routes, useParams} from "@redwoodjs/router";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useAuth} from "src/auth";
 import {toast} from "@redwoodjs/web/toast";
 import {useLazyQuery} from "@apollo/client";
@@ -63,15 +63,13 @@ const Pricing = () => {
   const [showAnnual, setShowAnnual] = useState(false)
   const params = useParams()
   const {getToken, isAuthenticated, currentUser} = useAuth()
-  const [showConfirmation, setShowConfirmation] = useState(false)
   const [currentPlanType, setCurrentPlanType] = useState('')
   const [newpPlanType, setNewPlanType] = useState('')
   const [searchUser, {data, loading, error}] = useLazyQuery(IS_USER_SUBSCRIBED)
-  const [processing, setProcessing] = useState(false)
 
   const checkout = async (planType) => {
 
-    const response = await fetch(`http://localhost:8910/.redwood/functions/checkout?plan=${planType}`, {
+    const response = await fetch(`http://localhost:8910/api/checkout?plan=${planType}`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${await getToken()}`,
@@ -97,14 +95,20 @@ const Pricing = () => {
     await checkout(planType)
   }
 
+  useEffect(() => {
+    if (currentUser){
+      searchUser({variables: {userId: currentUser.sub}})
+    }
+  },[currentUser])
+
 
   const handleSubscribeClick = async ({planType}: { planType: string }) => {
     if (!isAuthenticated) {
       toast('Log in or sign up to subscribe')
       navigate(routes.login())
     } else {
-      await searchUser({variables: {userId: currentUser.sub}})
       if (data.user.subscriptionId) {
+        console.log(data.user.subscriptionName)
         setCurrentPlanType(data.user.subscriptionName)
         setNewPlanType(planType)
         // @ts-ignore
@@ -141,10 +145,10 @@ const Pricing = () => {
           <h1 className="sm:text-4xl text-3xl font-medium title-font mb-2 ">Pricing</h1>
           <p className="lg:w-2/3 mx-auto leading-relaxed text-base ">Whatever cardigan tote bag tumblr
             hexagon brooklyn asymmetrical.</p>
-          <div className="flex mx-auto border-2 border-indigo-500 rounded overflow-hidden mt-6">
-            <button className="py-1 px-4 bg-indigo-500 text-white focus:outline-none">Monthly</button>
-            <button className="py-1 px-4 focus:outline-none">Annually</button>
-          </div>
+          {/*<div className="flex mx-auto border-2 border-indigo-500 rounded overflow-hidden mt-6">*/}
+          {/*  <button className="py-1 px-4 bg-indigo-500 text-white focus:outline-none">Monthly</button>*/}
+          {/*  <button className="py-1 px-4 focus:outline-none">Annually</button>*/}
+          {/*</div>*/}
         </div>
         <div className=" ">
           <div className={'flex flex-col md:flex-row justify-evenly gap-2 '}>

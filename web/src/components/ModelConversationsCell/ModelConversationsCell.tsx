@@ -2,6 +2,7 @@ import type {Conversation, ModelConversationsQuery} from 'types/graphql'
 import type {CellSuccessProps, CellFailureProps} from '@redwoodjs/web'
 import {ConversationContext} from "src/context/ConversationProvider";
 import {useContext, useEffect} from "react";
+import Skeleton from "react-loading-skeleton";
 
 export const QUERY = gql`
   query ModelConversationsQuery($modelId: String!) {
@@ -12,7 +13,13 @@ export const QUERY = gql`
   }
 `
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => {
+  return (
+    <div className={'p-3'}>
+      <Skeleton className={'opacity-5'}  height={40} count={5}/>
+    </div>
+  )
+}
 
 export const Empty = () => <div className={'px-6'}>Start a conversation...</div>
 

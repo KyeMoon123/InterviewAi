@@ -9,9 +9,10 @@ const Chat = () => {
   const {conversation} = useContext(ConversationContext);
 
   return (
-    <div className={''}>
+    <>
       {conversation ?
-        (<ConversationEntriesCell
+        (
+          <ConversationEntriesCell
             conversationId={conversation?.id}
           />
         ) : (
@@ -21,7 +22,7 @@ const Chat = () => {
         )
       }
 
-    </div>
+    </>
   )
 }
 

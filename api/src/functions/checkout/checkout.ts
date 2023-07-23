@@ -10,7 +10,7 @@ import {
   getStripeSubscription,
   newUserSession,
   updateUserSubscription
-} from "src/functions/checkout/checkoutService";
+} from "src/lib/StripeService";
 
 
 /**
@@ -38,14 +38,6 @@ export const checkoutHandler = async (event: APIGatewayEvent, _context: Context)
       console.log("Upgrading or downgrading plan")
       const subscription = await getStripeSubscription({id: currentUser.subscriptionId})
       const upgrade = await updateUserSubscription({priceId: priceId, subscription: subscription})
-
-      await db.user.update({
-        data: {
-          subscriptionId: upgrade.id,
-          subscriptionName: upgrade.plan.metadata.name,
-        },
-        where: {id: String(context.currentUser.sub)},
-      })
     } else {
       // User has a stripe customerID in the system, but is not currently subscribed to anything
       console.log("Existing user, but not subscribed to anything")

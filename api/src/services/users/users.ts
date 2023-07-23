@@ -14,11 +14,15 @@ export const user: QueryResolvers['user'] = ({ id }) => {
   })
 }
 
-export const userSignUp: MutationResolvers['userSignUp'] = ({ id }) => {
-  return db.user.create({
+export const userSignUp: MutationResolvers['userSignUp'] = async ({id}) => {
+
+  const stripeUser = await stripe.customers.create()
+
+  return  await db.user.create({
     data: {
       id: id,
       credits: 12,
+      stripeId: stripeUser.id,
     },
   })
 }
@@ -36,33 +40,34 @@ export const updateUser: MutationResolvers['updateUser'] = ({ id, input }) => {
   })
 }
 
-export const updateUserStripe: MutationResolvers['updateUserStripe'] = async ({id, sessionId}) => {
-
-  const user = await db.user.findUnique({
-    where: {id},
-  })
-  if (!user) {
-    throw new Error('User not found')
-  }
-
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
-    console.log(session)
-    const customer = await stripe.customers.retrieve(session.customer);
-    console.log(customer)
-    const subscription = await stripe.subscriptions.retrieve(session.subscription);
-    console.log(subscription)
-    const plan = await stripe.plans.retrieve(subscription.plan.id);
-    console.log(plan)
-
-    return await db.user.update({
-      data: {
-        stripeId: customer.id,
-        subscriptionId: subscription.id,
-        subscriptionName: plan.metadata.name,
-      },
-      where: {id},
-    })
-}
+// export const updateUserStripe: MutationResolvers['updateUserStripe'] = async ({id, sessionId}) => {
+//
+//   const user = await db.user.findUnique({
+//     where: {id},
+//   })
+//   if (!user) {
+//     throw new Error('User not found')
+//   }
+//     //
+//     // const session = await stripe.checkout.sessions.retrieve(sessionId);
+//     // console.log(session)
+//     // const customer = await stripe.customers.retrieve(session.customer);
+//     // console.log(customer)
+//     // const subscription = await stripe.subscriptions.retrieve(session.subscription);
+//     // console.log(subscription)
+//     // const plan = await stripe.plans.retrieve(subscription.plan.id);
+//     // console.log(plan)
+//     //
+//     // return await db.user.update({
+//     //   data: {
+//     //     stripeId: customer.id,
+//     //     subscriptionId: subscription.id,
+//     //     subscriptionName: plan.metadata.name,
+//     //   },
+//     //   where: {id},
+//     // })
+//   return user
+// }
 
 export const deleteUser: MutationResolvers['deleteUser'] = ({ id }) => {
   return db.user.delete({
@@ -85,14 +90,10 @@ export const cancelSubscription: MutationResolvers['cancelSubscription'] = async
     throw new Error('Error canceling subscription')
   }
 
+  user.subscriptionId = null
+  user.subscriptionName = null
 
-  return await db.user.update({
-    data: {
-      subscriptionId: null,
-      subscriptionName: null,
-    },
-    where: {id: String(context.currentUser.sub)},
-  })
+  return user
 }
 
 export const getUserCredits = async (userId:string):Promise<number> => {

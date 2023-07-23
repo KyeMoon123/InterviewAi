@@ -18,13 +18,13 @@ const ChatInput = ({text,setText,onSubmit, disabled}:ChatInputProps) => {
   }
 
   return (
-      <div className="absolute  pt-12 inset-x-0 bottom-0 flex flex-row justify-center ">
-        <form className={"flex flex-row justify-center items-center w-full max-w-4xl pb-12"} onSubmit={async (e) => {
+      <div className="flex flex-row justify-center  ">
+        <form className={"items-center w-full mx-4 "} onSubmit={async (e) => {
           e.preventDefault()
           await onSubmit()
         }}>
           <input disabled={disabled} value={disabled ? '' : text} onChange={(event) => setText(event.target.value)} type="text" placeholder="Type here"
-                 className="input h-20 pb-6 border border-neutral bg-base-100 w-full border border-white/30"/>
+                 className=" h-20 pb-6 border rounded-xl px-6 bg-base-100 w-full focus:border-primary"/>
         </form>
       </div>
   )

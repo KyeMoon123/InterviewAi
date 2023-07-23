@@ -13,7 +13,7 @@ enum Speaker {
   ai
 }
 
-model Conversation {
+model ConversationPanel {
   id        String              @id @default(uuid())
   createdAt DateTime            @default(now())
   updatedAt DateTime            @updatedAt
@@ -27,7 +27,7 @@ model ConversationEntry {
   id             String       @id @default(uuid())
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
-  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversation   ConversationPanel @relation(fields: [conversationId], references: [id])
   conversationId String
   speaker        Speaker
   entry          String
