@@ -68,9 +68,9 @@ export const getStripeSubscription = ({ id }) => {
 }
 
 export const getStripeEvent = async (sig, body) => {
-  logger.info("getStripeEvent")
-  logger.info(`sig: ${sig}, body: ${body}, secret: ${process.env.STRIPE_WEBHOOK_SECRET}`)
-
+  console.log("getStripeEvent")
+  console.log(`sig: ${sig}, body: ${body}, secret: ${process.env.STRIPE_WEBHOOK_SECRET}`)
+  
   return await stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET)
 }
 
