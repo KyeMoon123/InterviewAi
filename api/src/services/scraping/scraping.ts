@@ -41,8 +41,8 @@ const scrapeTrustPilot =  async (url, modelName) => {
   })
 
   try {
-    logger.info(`Triggering scraping for ${modelName} from ${url}`)
-    logger.info(`${process.env.PROTOCOL}${process.env.API_URL}/trustpilotReviews-background`)
+    console.log(`Triggering scraping for ${modelName} from ${url}`)
+    console.log(`${process.env.PROTOCOL}${process.env.API_URL}/trustpilotReviews-background`)
     await fetch(`${process.env.PROTOCOL}${process.env.API_URL}/trustpilotReviews-background`, {
       method: 'POST',
       body: JSON.stringify(body),
@@ -52,11 +52,6 @@ const scrapeTrustPilot =  async (url, modelName) => {
       }
     });
   } catch (error) {
-    console.log(error)
-    return {
-      url: url,
-      modelName: modelName,
-      message: "Error while fetching reviews from TrustPilot"
-    }
+    throw new Error(error);
   }
 }
