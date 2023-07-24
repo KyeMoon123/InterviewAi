@@ -96,8 +96,13 @@ export const cancelSubscription: MutationResolvers['cancelSubscription'] = async
     throw new Error('Error canceling subscription')
   }
 
-  user.subscriptionId = null
-  user.subscriptionName = null
+  await db.user.update({
+    data: {
+      subscriptionId: null,
+      subscriptionName: null,
+    },
+    where: {id: String(context.currentUser.sub)},
+  })
 
   return user
 }
