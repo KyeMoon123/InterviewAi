@@ -1,5 +1,6 @@
 import {db} from "src/lib/db";
 import {logger} from "src/lib/logger";
+import {APIGatewayEvent} from "aws-lambda";
 
 const Stripe = require('stripe')
 
@@ -67,11 +68,13 @@ export const getStripeSubscription = ({ id }) => {
   return stripe.subscriptions.retrieve(id)
 }
 
-export const getStripeEvent = async (sig, body) => {
-  console.log("getStripeEvent")
-  console.log(`sig: ${sig}, body: ${body}, secret: ${process.env.STRIPE_WEBHOOK_SECRET}`)
-  
-  return await stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET)
+export const getStripeEvent = async (event: APIGatewayEvent) => {
+
+  return await stripe.webhooks.constructEvent(
+    event.body,
+    event.headers['stripe-signature'],
+    process.env.STRIPE_WEBHOOK_SECRET
+  )
 }
 
 export const handleCustomerSubscriptionCreated = async (stripeEvent) => {
@@ -157,3 +160,5 @@ export const handleCustomerSubscriptionDeleted = async (stripeEvent) => {
     }
   })
 }
+
+
