@@ -4,10 +4,9 @@ import {APIGatewayEvent} from "aws-lambda";
 
 const Stripe = require('stripe')
 
-const stripe = Stripe("sk_test_51NU6MuHjkj0WoObL0VePy1f0xdIe7iF2xVK8T1tlLTHQNkwoWfxGCn19n6ANz1gP7ipHwVYeHC7ZLwrQkVPo7wnz00ohRki5rs");
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
-
-const URL = `${process.env.PROTOCOL}${process.env.REDWOOD_ENV_VERCEL_URL}`
+const URL = `${process.env.PROTOCOL}${process.env.VERCEL_URL}`
 
 export const newUserSession = async ({priceId}) => {
   return await stripe.checkout.sessions.create({

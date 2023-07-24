@@ -41,15 +41,19 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
   // Handle the event
   switch (stripeEvent.type) {
     case 'customer.subscription.created':
+      logger.info(`Handling event type ${stripeEvent.type}`)
       await handleCustomerSubscriptionCreated(stripeEvent)
       break
     case 'invoice.payment_succeeded':
+      logger.info(`Handling event type ${stripeEvent.type}`)
       await handleInvoicePaymentSucceeded(stripeEvent)
       break
     case 'customer.subscription.deleted':
+      logger.info(`Handling event type ${stripeEvent.type}`)
       await handleCustomerSubscriptionDeleted(stripeEvent)
       break
     case 'customer.subscription.updated':
+      logger.info(`Handling event type ${stripeEvent.type}`)
       await handleCustomerSubscriptionUpdated(stripeEvent)
       break
     default:
