@@ -1,6 +1,7 @@
 import {MutationResolvers} from "types/graphql";
 import {modelRepository} from "src/services/models/models";
 import {signPayload} from "@redwoodjs/api/webhooks";
+import {logger} from "src/lib/logger";
 
 export const triggerScrape: MutationResolvers['triggerScrape'] = async ({url, modelName, source}) => {
   let model = await modelRepository.findModelByName(modelName.toLowerCase());
@@ -40,7 +41,9 @@ const scrapeTrustPilot =  async (url, modelName) => {
   })
 
   try {
-    await fetch("http://localhost:8911/trustpilotReviews-background", {
+    logger.info(`Triggering scraping for ${modelName} from ${url}`)
+    logger.info(`${process.env.PROTOCOL}${process.env.API_URL}/trustpilotReviews-background`)
+    await fetch(`${process.env.PROTOCOL}${process.env.API_URL}/trustpilotReviews-background`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
