@@ -8,7 +8,7 @@ export const triggerScrape: MutationResolvers['triggerScrape'] = async ({url, mo
   if (model === null) {
     model = await modelRepository.createModel({name: modelName.toLowerCase()});
   }
-  triggerBySource(source, url, model.name);
+  await triggerBySource(source, url, model.name);
   return {
     url: url,
     modelName: model.name,
@@ -16,10 +16,10 @@ export const triggerScrape: MutationResolvers['triggerScrape'] = async ({url, mo
   }
 }
 
-const triggerBySource =  (source, url, modelName) => {
+const triggerBySource =  async (source, url, modelName) => {
   switch (source) {
     case "TRUST_PILOT":
-      scrapeTrustPilot(url,modelName);
+      await scrapeTrustPilot(url, modelName);
     default:
       return {
         url: url,
