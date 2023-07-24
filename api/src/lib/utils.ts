@@ -10,7 +10,7 @@ export const verifyWebhook = (event: APIGatewayEvent) => {
     verifyEvent('sha256Verifier', {
       event,
       payload: event.body,
-      secret: process.env.WEBHOOK_SECRET,
+      secret: process.env.INTERNAL_WEBHOOK_SECRET,
       options,
     })
   } catch (e) {

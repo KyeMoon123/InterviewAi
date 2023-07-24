@@ -37,7 +37,7 @@ const scrapeTrustPilot =  async (url, modelName) => {
 
   const signature =  signPayload('sha256Verifier', {
     payload: JSON.stringify(body),
-    secret: process.env.WEBHOOK_SECRET,
+    secret: process.env.INTERNAL_WEBHOOK_SECRET
   })
 
   try {
