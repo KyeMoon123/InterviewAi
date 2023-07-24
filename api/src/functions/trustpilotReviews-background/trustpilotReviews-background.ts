@@ -19,7 +19,11 @@ import {verifyWebhook} from "src/lib/utils";
  */
 export const trustPilotScrapingHandler = async (event: APIGatewayEvent, _context: Context) => {
   await verifyWebhook(event)
-  const {url, modelName} = JSON.parse(event.body);
+
+  const parsedBody = event.isBase64Encoded
+    ? Buffer.from(event.body, 'base64').toString('utf8')
+    : event.body
+  const {url, modelName} = JSON.parse(parsedBody);
   try {
 
     const paginationURLS = await trustPilotScraper.getUrlsForAllReviewPages(url);
