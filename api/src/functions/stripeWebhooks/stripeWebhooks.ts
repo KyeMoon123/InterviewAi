@@ -32,7 +32,7 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
     console.log(process.env.STRIPE_WEBHOOK_SECRET)
     stripeEvent = await getStripeEvent(event)
   } catch (err) {
-    logger.error(err)
+    //logger.error(err)
     return {
       statusCode: 400,
       body: `Webhook Error: ${err.message}`,
