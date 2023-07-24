@@ -2,6 +2,7 @@ import {navigate, routes} from "@redwoodjs/router";
 import {User} from "types/graphql";
 import {useMutation} from "@redwoodjs/web";
 import {toast} from "@redwoodjs/web/toast";
+import dayjs from "dayjs";
 
 interface ProfileSectionProps {
   user: Partial<User>
@@ -19,7 +20,7 @@ const CANCEL_SUBSCRIPTION = gql`
 
 const ProfileSection = ({user}: ProfileSectionProps) => {
 
-  const [cancelSubscription, {loading, error}] = useMutation(CANCEL_SUBSCRIPTION,{
+  const [cancelSubscription, {loading, error}] = useMutation(CANCEL_SUBSCRIPTION, {
     onCompleted: () => {
       toast.dismiss()
       toast.success('Subscription cancelled')
@@ -42,11 +43,11 @@ const ProfileSection = ({user}: ProfileSectionProps) => {
   }
 
   const onClickCancelSubscription = async () => {
-    console.log(user)
-    {!user.subscriptionId ?
-    toast.error('You do not have an active subscription')
-    :     // @ts-ignore
-      window.cancel_confirmation.showModal()
+    {
+      (!user.subscriptionId || user.subscriptionCancelAtPeriodEnd )  ?
+        toast.error('You do not have an active subscription')
+        :     // @ts-ignore
+        window.cancel_confirmation.showModal()
     }
   }
 
@@ -57,11 +58,12 @@ const ProfileSection = ({user}: ProfileSectionProps) => {
       <dialog id="cancel_confirmation" className="modal">
         <form method="dialog" className="modal-box">
           <h3 className="font-bold text-lg">Are you sure 😢</h3>
-          <p className="py-4">Clicking cancel will cancel your plan and stop your billing. You will keep your current credits</p>
+          <p className="py-4">Clicking cancel will cancel your plan and stop your billing. You will keep your current
+            credits</p>
           <div className="modal-action">
             {/* if there is a button in form, it will close the modal */}
             <button className="btn ">Close</button>
-            <button onClick={()=>onConfirmCancelSubscription()} className="btn btn-outline">Cancel</button>
+            <button onClick={() => onConfirmCancelSubscription()} className="btn btn-outline">Cancel</button>
           </div>
         </form>
       </dialog>
@@ -74,25 +76,39 @@ const ProfileSection = ({user}: ProfileSectionProps) => {
               <span className="text-lg font-medium text-base-content title-font mb-2">Current Subscription</span>
             </div>
             <div className="md:flex-grow pt-2">
-              <h2 className="text-4xl font-medium text-primary title-font mb-2">{user.subscriptionName ? user.subscriptionName : "Free" }</h2>
+              <h2
+                className="text-4xl font-medium text-primary title-font mb-2">{user.subscriptionName ? user.subscriptionName : "Free"}</h2>
             </div>
-            <div className={'grid grid-cols-3  gap-4 space-y-4 '}>
+            <div className={'grid grid-cols-4  gap-4 space-y-4 '}>
               <div className={'flex flex-col'}>
                 <span className={'text-sm font-semibold py-2'}></span>
                 <span className={'text-base-content'}>
-                <button onClick={() => {
-                  navigate(routes.pricing({ref: 'upgrade'}))
-                }} className={'btn btn-sm btn-primary mt-2 '}>
-                  Upgrade
-                </button>
-              </span>
+                  <button onClick={() => {
+                    navigate(routes.pricing({ref: 'upgrade'}))
+                  }} className={'btn btn-sm btn-primary mt-2 '}>
+                    Upgrade
+                  </button>
+                </span>
               </div>
               <div className={'flex flex-col'}>
-              <span className={'text-base-content'}>
-                <button onClick={()=>onClickCancelSubscription()} className={'btn btn-sm btn-ghost mt-2 '}>
-                  Cancel
-                </button>
-              </span>
+                <span className={'text-base-content'}>
+                  <button onClick={() => onClickCancelSubscription()} className={'btn btn-sm btn-outline mt-2 '}>
+                    Cancel
+                  </button>
+                </span>
+              </div>
+              <div className={'flex flex-col'}>
+                <span className={'font-semibold'}>Next Billing Date</span>
+                {user.subscriptionCancelAtPeriodEnd
+                  ? (
+                    <>
+                      <span className={'text-sm text-base-content'}>You have cancelled your subscription</span>
+                      <span className={'text-sm text-base-content'}>{`It will end on ${dayjs(user.subscriptionCurrentPeriodEnd).format('DD MMMM YYYY')} and will not be renewed`} </span>
+                    </>
+                  )
+                  : (<span>{dayjs(user.subscriptionCurrentPeriodEnd).format('DD MMMM YYYY')}</span>)
+
+                }
               </div>
             </div>
           </div>

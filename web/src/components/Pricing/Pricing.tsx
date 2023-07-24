@@ -4,6 +4,7 @@ import {useAuth} from "src/auth";
 import {toast} from "@redwoodjs/web/toast";
 import {useLazyQuery} from "@apollo/client";
 import {stripeCheckout} from "src/Utils";
+import {LoadingModal} from "src/components/LoadingModal";
 
 interface PricingCardProps {
   planName: string,
@@ -67,21 +68,25 @@ const Pricing = () => {
   const [currentPlanType, setCurrentPlanType] = useState('')
   const [newpPlanType, setNewPlanType] = useState('')
   const [searchUser, {data, loading, error}] = useLazyQuery(IS_USER_SUBSCRIBED)
+  const [loadingModal, setLoadingModal] = useState(false)
 
   const checkout = async (planType) => {
-
+    setLoadingModal(true)
     const response = await stripeCheckout({token: await getToken(), planType})
     const {sessionUrl} = await response.json()
 
     if (sessionUrl) {
       toast.dismiss()
       window.open(sessionUrl)
+      setLoadingModal(false)
     } else if (!sessionUrl && response.status === 200) {
       toast.dismiss()
       toast.success(`You have successfully subscribed to ${planType} plan`)
+      setLoadingModal(false)
     } else {
       toast.dismiss()
       toast.error('Something went wrong')
+      setLoadingModal(false)
     }
   }
 
@@ -116,7 +121,7 @@ const Pricing = () => {
 
   return (
     <section className="text-base-content w-full overflow-hidden z-20 relative">
-
+      <LoadingModal loading={loadingModal}/>
       {/* Confirmation dialog */}
       <dialog id="confirmation_dialog" className="modal">
         <form method="dialog" className="modal-box">

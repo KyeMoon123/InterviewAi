@@ -9,6 +9,8 @@ export const QUERY = gql`
       subscriptionName
       subscriptionId
       credits
+      subscriptionCancelAtPeriodEnd
+      subscriptionCurrentPeriodEnd
     }
   }
 `

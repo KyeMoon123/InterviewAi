@@ -137,9 +137,10 @@ export const handleCustomerSubscriptionUpdated = async (stripeEvent) => {
     data: {
       subscriptionId: subscription.id,
       subscriptionName: subscription.plan.metadata.name,
+      subscriptionCancelAtPeriodEnd: subscription.cancel_at_period_end,
+      subscriptionCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
     }
   })
-
 }
 
 export const handleCustomerSubscriptionDeleted = async (stripeEvent) => {

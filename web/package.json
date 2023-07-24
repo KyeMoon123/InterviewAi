@@ -24,6 +24,7 @@
     "class-variance-authority": "^0.6.1",
     "clsx": "^1.2.1",
     "daisyui": "latest",
+    "dayjs": "^1.11.9",
     "lucide-react": "^0.260.0",
     "prop-types": "15.8.1",
     "react": "18.2.0",

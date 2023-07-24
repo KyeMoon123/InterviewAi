@@ -8,6 +8,8 @@ export const schema = gql`
     subscriptionId: String
     subscriptionName: String
     subscriptionStatus: String
+    subscriptionCancelAtPeriodEnd: Boolean
+    subscriptionCurrentPeriodEnd: DateTime
   }
 
   type Query {
