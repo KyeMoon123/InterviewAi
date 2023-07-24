@@ -2,6 +2,10 @@ import {APIGatewayEvent} from "aws-lambda";
 import {signPayload, verifyEvent, VerifyOptions} from "@redwoodjs/api/webhooks";
 
 export const verifyWebhook = (event: APIGatewayEvent) => {
+  const parsedBody = event.isBase64Encoded
+    ? Buffer.from(event.body, 'base64').toString('utf8')
+    : event.body
+
   try {
     const options = {
       signatureHeader: 'internal-Webhook-Signature',
@@ -9,7 +13,7 @@ export const verifyWebhook = (event: APIGatewayEvent) => {
 
     verifyEvent('sha256Verifier', {
       event,
-      payload: event.body,
+      payload: parsedBody,
       secret: process.env.INTERNAL_WEBHOOK_SECRET,
       options,
     })
@@ -18,9 +22,3 @@ export const verifyWebhook = (event: APIGatewayEvent) => {
   }
 }
 
-const signWebhook = (payload) => {
-  return signPayload('sha256Verifier', {
-    payload: JSON.stringify(payload),
-    secret: process.env.WEBHOOK_SECRET,
-  })
-}
