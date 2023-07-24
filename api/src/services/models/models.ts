@@ -7,7 +7,6 @@ import type {
 import { db } from 'src/lib/db'
 
 export const models: QueryResolvers['models'] = () => {
-  console.log(`${process.env.PROTOCOL}${process.env.VERCEL_URL || process.env.VERCEL_BRANCH_URL || process.env.APP_URL}`)
   return db.model.findMany()
 }
 
