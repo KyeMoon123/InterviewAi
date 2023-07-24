@@ -27,11 +27,12 @@ import {
 export const handler = async (event: APIGatewayEvent, _context: Context) => {
   logger.info(`${event.httpMethod} ${event.path}: stripeWebhooks function`)
 
+
   let stripeEvent
   try {
     stripeEvent = await getStripeEvent(event)
   } catch (err) {
-    //logger.error(err)
+    logger.error(err.message)
     return {
       statusCode: 400,
       body: `Webhook Error: ${err.message}`,

@@ -69,9 +69,12 @@ export const getStripeSubscription = ({ id }) => {
 }
 
 export const getStripeEvent = async (event: APIGatewayEvent) => {
+  const parsedBody = event.isBase64Encoded
+    ? Buffer.from(event.body, 'base64').toString('utf8')
+    : event.body
 
   return await stripe.webhooks.constructEvent(
-    JSON.parse(event.body),
+    parsedBody,
     event.headers['stripe-signature'],
     process.env.STRIPE_WEBHOOK_SECRET
   )
