@@ -29,7 +29,6 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
 
   let stripeEvent
   try {
-    console.log(process.env.STRIPE_WEBHOOK_SECRET)
     stripeEvent = await getStripeEvent(event)
   } catch (err) {
     //logger.error(err)

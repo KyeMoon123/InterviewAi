@@ -71,7 +71,7 @@ export const getStripeSubscription = ({ id }) => {
 export const getStripeEvent = async (event: APIGatewayEvent) => {
 
   return await stripe.webhooks.constructEvent(
-    event.body,
+    JSON.parse(event.body),
     event.headers['stripe-signature'],
     process.env.STRIPE_WEBHOOK_SECRET
   )
