@@ -5,7 +5,7 @@ import {APIGatewayEvent} from "aws-lambda";
 const Stripe = require('stripe')
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-const URL = `${process.env.PROTOCOL}${process.env.APP_URL || process.env.VERCEL_URL || process.env.VERCEL_BRANCH_URL}`
+const URL = `${process.env.PROTOCOL}${process.env.VERCEL_URL || process.env.VERCEL_BRANCH_URL || process.env.APP_URL}`
 
 export const newUserSession = async ({priceId}) => {
   return await stripe.checkout.sessions.create({
