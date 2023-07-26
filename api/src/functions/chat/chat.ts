@@ -159,26 +159,27 @@ export const chatHandler = async (event: APIGatewayEvent, _context: Context) => 
       summaries: summary,
       question: prompt,
       conversationHistory,
-    });
+    }).then(async () => {
+        await updateUser({
+          id: userId,
+          input: {
+            credits: (userCredits - 1)
+          }
+        })
+
+        return {
+          statusCode: 200,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            data: 'chat function',
+          }),
+        }
+      }
+    )
   } catch (error) {
     console.error(error)
-  }
-
-  await updateUser({
-    id: userId,
-    input: {
-      credits: (userCredits - 1)
-    }
-  })
-
-  return {
-    statusCode: 200,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      data: 'chat function',
-    }),
   }
 }
 
