@@ -30,6 +30,7 @@ const tokenBatchSize = 10; // Number of tokens to send in each batch
 const tokenBatchDelay = 1000 / maxPublishRate; // Delay between batches to maintain rate limit
 
 let tokenBatch = []; // Accumulated tokens in the current batch
+let LLMResponseFinished = false; // Flag to track if the LLM response has finished
 let publishingTokens = false; // Flag to track if tokens are being published
 
 
@@ -130,10 +131,8 @@ export const chatHandler = async (event: APIGatewayEvent, _context: Context) => 
         },
         async handleLLMEnd(result) {
           tokenBatch.push("END"); // Add "END" token to the batch
-          if (!publishingTokens) {
-            await publishTokens(channel, interactionId);
-          }
           await conversationLog.addEntry({entry: result.generations[0][0].text, speaker: "ai"})
+          LLMResponseFinished = true; // Set flag to indicate that the LLM response has finished
         },
       }),
     });
@@ -152,21 +151,22 @@ export const chatHandler = async (event: APIGatewayEvent, _context: Context) => 
         }
       })
     }
-
     const summary = allDocs.length > 4000 ? await summarizeLongDocument({document: allDocs, inquiry}) : allDocs
 
     await chain.call({
       summaries: summary,
       question: prompt,
       conversationHistory,
-    }).then(async () => {
-        await updateUser({
-          id: userId,
-          input: {
-            credits: (userCredits - 1)
-          }
-        })
+    })
+    await updateUser({
+      id: userId,
+      input: {
+        credits: (userCredits - 1)
+      }
+    })
 
+    while (LLMResponseFinished) {
+      if(!publishingTokens && tokenBatch.length === 0) {
         return {
           statusCode: 200,
           headers: {
@@ -177,8 +177,10 @@ export const chatHandler = async (event: APIGatewayEvent, _context: Context) => 
           }),
         }
       }
-    )
-  } catch (error) {
+      await delay(300);
+    }
+  } catch
+    (error) {
     console.error(error)
   }
 }
@@ -188,8 +190,6 @@ export const handler = useRequireAuth({
   getCurrentUser,
   authDecoder,
 })
-
-
 // UTIL FUNCTIONS - Should move out somewhere neater
 
 const publishTokens = async (channel, interactionId) => {
@@ -221,7 +221,6 @@ const publishBatch = async (channel, batch, interactionId) => {
         interactionId,
       }
     }
-
     channel.publish({data}); // Publish each token separately
     await delay(tokenBatchDelay); // Delay between publishing tokens to maintain rate limit
   }
