@@ -53,7 +53,7 @@ export const ConversationPanel = ({conversationEntries}: ConversationProps) => {
     try {
       setDisableInput(true)
       setIsThinking(true)
-      const response = await sendChatMessage({
+      await sendChatMessage({
         token: await getToken(),
         body: {
           prompt: text,
@@ -62,13 +62,12 @@ export const ConversationPanel = ({conversationEntries}: ConversationProps) => {
           conversationId: conversation.id,
         }
       })
-      const json = await response.json()
-      if (json.error) {
-        toast.error(json.error)
-      }
+
       setIsThinking(false)
     } catch (error) {
-      console.error("Error submitting message:", error);
+      toast.error(error.message);
+      setLocalConversation((state) => state.slice(0, state.length - 1));
+      setDisableInput(false)
     } finally {
       setText("");
     }

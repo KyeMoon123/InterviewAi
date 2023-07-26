@@ -36,10 +36,15 @@ let publishingTokens = false; // Flag to track if tokens are being published
 const ably = new Ably.Realtime({key: process.env.ABLY_API_KEY});
 
 export const chatHandler = async (event: APIGatewayEvent, _context: Context) => {
-  const {prompt, modelName, modelId, conversationId} = JSON.parse(event.body);
+  const parsedBody = event.isBase64Encoded
+    ? Buffer.from(event.body, 'base64').toString('utf8')
+    : event.body
+
+  const {prompt, modelName, modelId, conversationId} = JSON.parse(parsedBody);
   const userId = String(context.currentUser.sub)
   logger.info(`querying model ${modelName} with id ${modelId} for user ${String(context.currentUser.sub)} and conversation ${conversationId} with prompt ${prompt} `)
   const userCredits = await getUserCredits(userId)
+
   if (userCredits < 1) {
     return {
       statusCode: 402,

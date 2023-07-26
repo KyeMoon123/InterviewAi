@@ -31,7 +31,7 @@ export const updateChatbotMessage = (
 };
 
 export const sendChatMessage = async ({token, body}:{token:string, body:any}):Promise<Response> => {
-  return await fetch(`${process.env.UI_FUNCTIONS_SRC}/chat`, {
+  let response =  await fetch(`${process.env.UI_FUNCTIONS_SRC}/chat`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -40,6 +40,11 @@ export const sendChatMessage = async ({token, body}:{token:string, body:any}):Pr
     },
     body: JSON.stringify(body),
   })
+  if (!response.ok) {
+    const {error} = await response.json()
+    throw new Error(error)
+  }
+  return response
 }
 
 export const stripeCheckout = async ({token, planType}:{token:string, planType:string}):Promise<Response> => {

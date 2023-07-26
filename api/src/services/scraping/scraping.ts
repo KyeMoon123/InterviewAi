@@ -41,8 +41,6 @@ const scrapeTrustPilot =  async (url, modelName) => {
   })
 
   try {
-    console.log(`Triggering scraping for ${modelName} from ${url}`)
-    console.log(`${process.env.PROTOCOL}${process.env.API_URL}/trustpilotReviews-background`)
     await fetch(`${process.env.PROTOCOL}${process.env.API_URL}/trustpilotReviews-background`, {
       method: 'POST',
       body: JSON.stringify(body),

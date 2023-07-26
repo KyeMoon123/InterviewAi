@@ -108,6 +108,9 @@ export const getUserCredits = async (userId: string): Promise<number> => {
       credits: true
     }
   })
+  if (!userCredits) {
+    throw new Error('User not found')
+  }
   return userCredits.credits
 }
 

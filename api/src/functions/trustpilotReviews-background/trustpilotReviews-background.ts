@@ -7,8 +7,6 @@ import {trustPilotScraper} from "src/lib/TrustPilotLib/TrustPilotScraper";
 import {useRequireAuth} from "@redwoodjs/graphql-server";
 import {getCurrentUser} from "src/lib/auth";
 import {authDecoder} from "@redwoodjs/auth-supabase-api";
-import {checkoutHandler} from "src/functions/checkout/checkout";
-import {verifySignature} from "@redwoodjs/api/webhooks";
 import {verifyWebhook} from "src/lib/utils";
 
 /**
