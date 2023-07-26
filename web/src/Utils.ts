@@ -41,6 +41,9 @@ export const sendChatMessage = async ({token, body}:{token:string, body:any}):Pr
     body: JSON.stringify(body),
   })
   if (!response.ok) {
+    if(response.status === 504){
+      throw new Error("Sorry your request timed out. Your query may be to large or there may be an issue on our end. Please try again later.")
+    }
     const {error} = await response.json()
     throw new Error(error)
   }
