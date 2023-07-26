@@ -41,9 +41,6 @@ export const Success = ({
                         }: CellSuccessProps<ConversationEntriesQuery>) => {
 
   return (
-    <>
       <ConversationPanel conversationEntries={conversationEntries}/>
-    </>
-
   )
 }

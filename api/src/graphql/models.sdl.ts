@@ -6,6 +6,7 @@ export const schema = gql`
     name: String!
     version: String
     reviews: [Review]!
+    imageUrl:String
   }
 
   type Query {

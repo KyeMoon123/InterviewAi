@@ -19,6 +19,9 @@ export const modelConversations: QueryResolvers['modelConversations'] = ({
     where: {
       modelId: modelId,
       userId: context.currentUser.sub
+    },
+    orderBy: {
+      createdAt: 'desc'
     }
   })
 }

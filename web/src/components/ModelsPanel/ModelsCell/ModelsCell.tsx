@@ -11,6 +11,7 @@ export const QUERY = gql`
     models {
       id
       name
+      imageUrl
     }
   }
 `
@@ -18,7 +19,7 @@ export const QUERY = gql`
 export const Loading = () => {
   return (
     <div className={'p-3'}>
-      <Skeleton className={'opacity-5'}  height={40} count={5}/>
+      <Skeleton className={'opacity-5'} height={40} count={5}/>
     </div>
   )
 }
@@ -53,8 +54,9 @@ export const Success = ({models}: CellSuccessProps<ModelsQuery>) => {
             <li key={m.id} className="px-2 space-y-2">
               <button
                 onClick={() => handleSelectModel(m)}
-                className={`p-3 rounded-lg w-full flex justify start shadow-xl  cursor-pointer ${model && m.id === model.id ? 'bg-primary text-primary-content' : 'bg-base-100'}`}>
-                <h2 className="capitalize text-sm">{(m.name)}</h2>
+                className={`p-3 rounded-lg w-full flex justify-between align-middle items-center shadow-xl  cursor-pointer ${model && m.id === model.id ? 'bg-primary text-primary-content' : 'bg-base-100'}`}>
+                    <h2 className="capitalize text-sm">{(m.name)}</h2>
+                    <img className="w-8 h-8 " src={m.imageUrl} alt=""/>
               </button>
             </li>
           )

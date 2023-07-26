@@ -88,7 +88,7 @@ export const chatHandler = async (event: APIGatewayEvent, _context: Context) => 
     channel.publish({
       data: {
         event: "status",
-        message: "Finding matches...",
+        message: "Finding matches",
       }
     })
 
@@ -147,7 +147,7 @@ export const chatHandler = async (event: APIGatewayEvent, _context: Context) => 
       channel.publish({
         data: {
           event: "status",
-          message: `Just a second, forming final answer...`,
+          message: `Just a second, forming final answer.`,
         }
       })
     }

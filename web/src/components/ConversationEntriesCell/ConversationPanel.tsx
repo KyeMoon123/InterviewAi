@@ -18,7 +18,6 @@ export const ConversationPanel = ({conversationEntries}: ConversationProps) => {
   const [text, setText] = useState("");
   const [localConversation, setLocalConversation] = useState<Partial<ConversationEntry>[]>(conversationEntries);
   const [statusMessage, setStatusMessage] = useState("Waiting for query...");
-  const [isThinking, setIsThinking] = useState(false);
   const [disableInput, setDisableInput] = useState(false)
   const {currentUser, getToken} = useAuth()
 
@@ -29,6 +28,7 @@ export const ConversationPanel = ({conversationEntries}: ConversationProps) => {
   useChannel(String(currentUser.sub), (message) => {
     switch (message.data.event) {
       case "response":
+        setStatusMessage("Typing");
         setLocalConversation((state) => updateChatbotMessage(state, message));
         break;
       case "status":
@@ -37,11 +37,12 @@ export const ConversationPanel = ({conversationEntries}: ConversationProps) => {
       case "responseEnd":
       default:
         setDisableInput(false)
-        setStatusMessage("Waiting for query...");
+        setStatusMessage("Waiting for query");
     }
   });
 
   const submit = async () => {
+    setStatusMessage("Analysing")
     setLocalConversation((state) => [
       ...state,
       {
@@ -52,7 +53,6 @@ export const ConversationPanel = ({conversationEntries}: ConversationProps) => {
     ]);
     try {
       setDisableInput(true)
-      setIsThinking(true)
       await sendChatMessage({
         token: await getToken(),
         body: {
@@ -63,7 +63,6 @@ export const ConversationPanel = ({conversationEntries}: ConversationProps) => {
         }
       })
 
-      setIsThinking(false)
     } catch (error) {
       toast.error(error.message);
       setLocalConversation((state) => state.slice(0, state.length - 1));
@@ -79,7 +78,14 @@ export const ConversationPanel = ({conversationEntries}: ConversationProps) => {
         <div className={' px-6 bg-base-200 text-base-content py-2'}>
           <div className={'flex flex-col '}>
             <h1 className={'capitalize text-lg font-semibold'}>{model.name}</h1>
-            <h1 className={' text-sm font-semibold '}>{statusMessage}</h1>
+            <div className={'flex space-x-4'}>
+              <h1 className={' text-sm font-semibold '}>{statusMessage}</h1>
+              {
+                disableInput && (
+                  <span className="loading loading-dots loading-md text-primary"></span>
+                )
+              }
+            </div>
           </div>
         </div>
         <div className={'h-full  border rounded rounded-xl overflow-hidden overflow-y-scroll  m-4'}>

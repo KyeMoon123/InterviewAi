@@ -25,20 +25,22 @@ const ModelConversationsPanel = () => {
 
   const [newConversation, {loading, error, data}] = useMutation(NEW_CONVERSATION, {
     onCompleted: (data) => {
-      toast.success('ConversationPanel created')
+      toast.success('Conversation created, go ahead and start chatting!')
       setConversation(data.createConversation)
     },
     refetchQueries: ['ModelConversationsQuery'],
     awaitRefetchQueries: true
   })
 
+
+
   const handleCreateConversation = async () => {
-    if(name === ''){
+    if (name === '') {
       toast.error('Please enter a name')
       return
-    }else {
+    } else {
       await newConversation({
-          variables: {input: {modelId: model.id, userId: currentUser.sub, name: name}},
+        variables: {input: {modelId: model.id, userId: currentUser.sub, name: name}},
       })
       setShow(false)
       setName('')
@@ -71,12 +73,14 @@ export interface ConversationNameInputProps {
   setName: (name: string) => void
   name?: string
 }
-export const ConversationNameInput = ({onSubmit, setName, name}:ConversationNameInputProps) => {
+
+export const ConversationNameInput = ({onSubmit, setName, name}: ConversationNameInputProps) => {
   return (
     <div className={'flex space-x-4 place-content-center pt-3 '}>
       <div className="flex  space-x-2">
-        <input value={name} type="text" placeholder="Conversation name" className="input input-sm input-bordered" onChange={(e)=>setName(e.target.value)}/>
-        <button  onClick={()=>onSubmit()} className="btn btn-sm  normal-case">Start</button>
+        <input value={name} type="text" placeholder="Conversation name" className="input input-sm input-bordered"
+               onChange={(e) => setName(e.target.value)}/>
+        <button onClick={() => onSubmit()} className="btn btn-sm  normal-case">Start</button>
       </div>
     </div>
   )
