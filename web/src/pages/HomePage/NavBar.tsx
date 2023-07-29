@@ -23,12 +23,12 @@ export const NavBar = () => {
       <div className="navbar-end space-x-4">
         {isAuthenticated ? (
           <div className={'flex align-middle items-center space-x-4 '}>
-            <div className="rounded-full border">
+            <div className="rounded-full border mb-2">
               <img src={`https://robohash.org/${currentUser.sub}`}
-                   className={'w-12 h-12 rounded-full'}/>
+                   className={'w-8 h-8 rounded-full'}/>
             </div>
             <Link className={'btn btn-outline btn-sm'} to={routes.chat()}>
-              Interview
+              Dashboard
               <ArrowRightIcon className={'w-4'}/>
             </Link>
           </div>
