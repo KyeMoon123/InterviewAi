@@ -3,6 +3,7 @@ import {User} from "types/graphql";
 import {useMutation} from "@redwoodjs/web";
 import {toast} from "@redwoodjs/web/toast";
 import dayjs from "dayjs";
+import {ModelRequestSection} from "src/components/ProfileSection/ModelRequestSection";
 
 interface ProfileSectionProps {
   user: Partial<User>
@@ -120,6 +121,8 @@ const ProfileSection = ({user}: ProfileSectionProps) => {
               <h2 className="text-4xl font-medium text-base-content title-font mb-2">{user.credits}</h2>
             </div>
           </div>
+
+          <ModelRequestSection/>
         </div>
       </div>
     </section>

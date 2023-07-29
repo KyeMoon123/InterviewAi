@@ -69,3 +69,12 @@ model User {
   subscriptionCancelAtPeriodEnd Boolean?
   subscriptionCurrentPeriodEnd DateTime?
 }
+
+model ModelRequest {
+  id        String       @id @default(uuid())
+  createdAt DateTime     @default(now())
+  userId    String
+  businessName String
+  businessWebsite String?
+}
+

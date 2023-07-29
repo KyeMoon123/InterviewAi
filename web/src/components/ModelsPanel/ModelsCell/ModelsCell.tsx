@@ -50,7 +50,6 @@ export const Success = ({models}: CellSuccessProps<ModelsQuery>) => {
 
   return (
     <ul className={'space-y-2  overflow-y-auto '}>
-      {console.log('models', models)}
       {models.map((m) => {
           return (
             <li key={m.id} className="px-2 space-y-2">
