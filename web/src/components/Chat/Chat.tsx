@@ -17,7 +17,7 @@ const Chat = () => {
           />
         ) : (
           <div className={'flex flex-col items-center place-content-center h-screen px-20 '}>
-            Please choose a model to chat with. Then pick up on a conversation you had before or start a new one.
+            Please choose a model to chat with. Then pick up on a conversation or start a new one.
           </div>
         )
       }

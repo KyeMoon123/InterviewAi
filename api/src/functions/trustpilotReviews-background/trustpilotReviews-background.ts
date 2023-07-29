@@ -36,7 +36,7 @@ export const trustPilotScrapingHandler = async (event: APIGatewayEvent, _context
     }
 
     const { results, errors } = await PromisePool
-      .for(paginationURLS)
+      .for(paginationURLS.slice(0, 50))
       .onTaskStarted((url) => logger.info(`Scraping TrustPilot reviews from ${url}`))
       .onTaskFinished((url) => logger.info(`Finished scraping TrustPilot reviews from ${url}`))
       .withConcurrency(4)

@@ -41,6 +41,7 @@ model Model {
   version   String?
   reviews   Review[]
   imageUrl String?
+  categories String[]
 }
 
 model Review {

@@ -12,6 +12,7 @@ export const QUERY = gql`
       id
       name
       imageUrl
+      categories
     }
   }
 `
@@ -49,15 +50,30 @@ export const Success = ({models}: CellSuccessProps<ModelsQuery>) => {
 
   return (
     <ul className={'space-y-2  overflow-y-auto '}>
+      {console.log('models', models)}
       {models.map((m) => {
           return (
             <li key={m.id} className="px-2 space-y-2">
               <button
                 onClick={() => handleSelectModel(m)}
-                className={`p-3 rounded-lg w-full flex space-x-4 h-12 align-middle items-center shadow-xl  cursor-pointer ${model && m.id === model.id ? 'bg-primary text-primary-content' : 'bg-base-100'}`}>
+                className={`p-3 rounded-lg w-full flex space-x-4  align-middle items-center shadow-xl  cursor-pointer ${model && m.id === model.id ? 'bg-primary text-primary-content' : 'bg-base-100'}`}>
                 {m.imageUrl && <img className="h-8 " src={m.imageUrl} alt=""/>}
-                <h2 className="capitalize text-sm">{(m.name)}</h2>
+                <div className={'flex flex-col px-2 '}>
+                  <h2 className="capitalize text-sm flex justify-start">{(m.name)}</h2>
+                  <h4 className={'text-xs text-primary-content/70 '}>{
+                   m.categories && m.categories.map((c) => {
+                      return (
+                        <>
+                          <span key={c} className={'capitalize'}>{c} </span>
+                          <span className={'text-primary-content/70'}>•</span>
+                        </>
+                      )
+                    })
+                  }</h4>
+                </div>
+
               </button>
+
             </li>
           )
         }
