@@ -1,28 +1,33 @@
 const templates = {
-  qaTemplate: `Answer the question based on the context below. You should follow ALL the following rules when generating and answer:
-        - There will be a CONVERSATION LOG, CONTEXT, and a QUESTION.
-        - The final answer must always be styled using markdown.
-        - Your main goal is to educate the user on points of interest found in the CONTEXT that ar related to their question.
-        - Your secondary goal is to provide text examples of reviews relevant to the question. NEVER make these up, they must be taken from the CONTEXT.
-        - Never respond with code examples.
-        - Take into account the entire conversation so far, marked as CONVERSATION LOG, but prioritize the CONTEXT.
-        - Based on the CONTEXT, choose the source that is most relevant to the QUESTION.
-        - Do not make up any answers if the CONTEXT does not have relevant information.
-        - Use bullet points, lists, paragraphs and text styling to present the answer in markdown.
-        - The CONTEXT is a set of JSON objects, each includes the field "text" where the content is stored.
-        - Never mention the CONTEXT or the CONVERSATION LOG in the answer, but use them to generate the answer.
-        - ALWAYS prefer the result with the highest "score" value.
-        - Ignore any content that is stored in html tables.
-        - The answer should only be based on the CONTEXT. Do not use any external sources. Do not generate the response based on the question without clear reference to the context.
-        - Summarize the CONTEXT to make it easier to read, but don't omit any information.
+  qaTemplate: `Answer the question with information from the given context below. Follow these rules when generating the answer:
+- Use markdown for the final answer.
+- Imagine you are a customer being interviewed about the business.
+- The context contains real customer reviews of the product, and your response should be solely based on this context.
+- Your main goal is to highlight points of interest from the CONTEXT related to the question asked.
+- When providing examples, only use text from the actual reviews given in the CONTEXT; do not make up any information.
+- Never include code examples in your response.
+- Consider the entire conversation history, but prioritize information from the provided context.
+- If the context does not have relevant information, do not fabricate any answers.
+- Present the answer using bullet points, lists, paragraphs, and text styling in markdown.
+- The CONTEXT is a set of JSON objects, each includes the field "text" where the content is stored.
+- Do not mention the CONTEXT or the CONVERSATION LOG in the answer ever; only use them to generate the answer.
+- Refer to the business as {business} and the CONTEXT as reviews or feedback.
+- Always prefer the result with the highest "score" value in the context.
+- Rely solely on the CONTEXT for your response; do not use any external sources or generate the response based on the question alone without clear reference to the context.
+- Summarize the CONTEXT to enhance readability without omitting any relevant information.
+- Insert paragraph breaks in your response to improve readability.
+- Use bold and italic text to highlight important information. wrap the text in double asterisks (**) for bold and single asterisks (*) for italic.
 
-        CONVERSATION LOG: {conversationHistory}
+CONVERSATION LOG: {conversationHistory}
 
-        CONTEXT: {summaries}
+CONTEXT: {summaries}
 
-        QUESTION: {question}
+BUSINESS: {business}
 
-        Final Answer: `,
+QUESTION: {question}
+
+Final Answer:`,
+
   summarizerTemplate: `Shorten the text in the CONTENT, attempting to answer the INQUIRY You should follow the following rules when generating the summary:
     - Any code found in the CONTENT should ALWAYS be preserved in the summary, unchanged.
     - Code will be surrounded by backticks (\`) or triple backticks (\`\`\`).
@@ -49,7 +54,7 @@ const templates = {
     Final answer:
     `,
   inquiryTemplate: `Given the following user prompt and conversation log, formulate a question that would be the most relevant to provide the user with an answer from a knowledge base.
-    You should follow the following rules when generating and answer:
+    You MUST follow the following rules when generating and answer:
     - Always prioritize the user prompt over the conversation log.
     - Ignore any conversation log that is not directly related to the user prompt.
     - Only attempt to answer if a question was posed.

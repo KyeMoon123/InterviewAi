@@ -7,6 +7,7 @@ interface ChatInputProps {
   disabled?: boolean
 }
 const ChatInput = ({text,setText,onSubmit, disabled}:ChatInputProps) => {
+
   const textareaRef = useRef<HTMLFormElement>(null);
   const textareaElement = textareaRef.current;
 
@@ -22,6 +23,7 @@ const ChatInput = ({text,setText,onSubmit, disabled}:ChatInputProps) => {
         <form className={"items-center w-full mx-4 "} onSubmit={async (e) => {
           e.preventDefault()
           await onSubmit()
+
         }}>
           <input disabled={disabled} value={disabled ? '' : text} onChange={(event) => setText(event.target.value)} type="text" placeholder="Type here"
                  className=" h-20 pb-6 border rounded-xl px-6 bg-base-100 w-full focus:border-primary"/>

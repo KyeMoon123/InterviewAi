@@ -130,7 +130,7 @@ const Pricing = () => {
           <p className="text-primary text-2xl font-semibold">{currentPlanType}</p>
           <p className="py-4">{`Are you sure you want to change to  `}</p>
           <p className="text-primary text-2xl font-semibold">{newpPlanType}</p>
-          <p className="py-4 pt-12 text-sm">{`Clicking confirm will change your plan and update your billing`}</p>
+          <p className="py-4 pt-12 text-sm">{`Clicking confirm will change your plan and update your billing. You wont be billed at the new plan rate until your current plan period ends`}</p>
           <div className="modal-action">
             <button className="btn">Close</button>
             <button onClick={() => onConfirm(newpPlanType)} className="btn btn-primary">Confirm</button>
@@ -149,8 +149,7 @@ const Pricing = () => {
           {/*  <button className="py-1 px-4 focus:outline-none">Annually</button>*/}
           {/*</div>*/}
         </div>
-        <div className=" ">
-          <div className={'flex flex-col md:flex-row justify-evenly gap-2 '}>
+        <div className="xs:flex xs:flex-col sm:grid sm:grid-cols-2 sm:grid-cold-4 lg:grid-cols-4 gap-4">
             {pricingCards.map((props) => (
               <PricingCard
                 {...props}
@@ -159,7 +158,6 @@ const Pricing = () => {
               />
             ))}
           </div>
-        </div>
       </div>
     </section>
   )

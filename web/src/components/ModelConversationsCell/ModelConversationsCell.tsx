@@ -62,17 +62,18 @@ export const Success = ({
     data: deleteData
   }] = useMutation(DELETE_CONVERSATION, {
     onCompleted: (data) => {
-      toast.success('ConversationPanel deleted')
+      toast.success('Conversation deleted')
+      setConversation(null)
     },
-    refetchQueries: ['ModelConversationsQuery'],
+    refetchQueries: ['ModelConversationsQuery', 'ConversationEntriesQuery'],
     awaitRefetchQueries: true
   })
 
   return (
     <>
       <ConfirmationModal
-        title={"test"}
-        description={"test"}
+        title={"Are you sure?"}
+        description={"This will delete the conversation and all of its entries."}
         setOpen={setShowConfirmationModal}
         open={showConfirmationModal}
         onConfirm={async () => {

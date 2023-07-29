@@ -43,8 +43,16 @@ export const chatHandler = async (event: APIGatewayEvent, _context: Context) => 
 
   const {prompt, modelName, modelId, conversationId} = JSON.parse(parsedBody);
   const userId = String(context.currentUser.sub)
-  logger.info(`querying model ${modelName} with id ${modelId} for user ${String(context.currentUser.sub)} and conversation ${conversationId} with prompt ${prompt} `)
   const userCredits = await getUserCredits(userId)
+
+  if (prompt.length > 1000) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        error: 'Prompt is too long, please shorten your prompt to 1000 characters or less'
+      })
+    }
+  }
 
   if (userCredits < 1) {
     return {
@@ -56,6 +64,7 @@ export const chatHandler = async (event: APIGatewayEvent, _context: Context) => 
   }
 
   if (!pinecone) {
+    logger.info("Initializing pinecone client")
     pinecone = await PineConeService.initPineconeClient()
   }
 
@@ -65,7 +74,7 @@ export const chatHandler = async (event: APIGatewayEvent, _context: Context) => 
 
     // Retrieve the conversation log and save the user's prompt
     const conversationLog = new ConversationLog(conversationId)
-    const conversationHistory = await conversationLog.getConversation({limit: 10, speaker: "user"})
+    const conversationHistory = await conversationLog.getConversation({limit: 4, speaker: "user"})
     await conversationLog.addEntry({entry: prompt, speaker: "user"})
 
     // Build an LLM chain that will improve the user prompt
@@ -93,14 +102,13 @@ export const chatHandler = async (event: APIGatewayEvent, _context: Context) => 
     })
 
     // take the embeddings and find the top 2 matches in the pinecone index
-    const matches = await getMatchesFromEmbeddings(embeddings, pinecone!, 3);
+    const matches = await getMatchesFromEmbeddings({
+      pinecone:pinecone,
+      embeddings: embeddings,
+      topK: 6,
+      namespace: modelName,
+    });
 
-    //   TODO: i am not using urls, change to review external references
-    //   const urls = matches && Array.from(new Set(matches.map(match => {
-    //     const metadata = match.metadata as Metadata
-    //     const {url} = metadata
-    //     return url
-    //   })))
 
     const docs = matches && Array.from(
       matches.reduce((map, match) => {
@@ -115,7 +123,7 @@ export const chatHandler = async (event: APIGatewayEvent, _context: Context) => 
 
     const promptTemplate = new PromptTemplate({
       template: templates.qaTemplate,
-      inputVariables: ["summaries", "question", "conversationHistory"],
+      inputVariables: ["summaries", "question", "conversationHistory", "business"],
     });
 
     const chat = new ChatOpenAI({
@@ -155,18 +163,19 @@ export const chatHandler = async (event: APIGatewayEvent, _context: Context) => 
 
     await chain.call({
       summaries: summary,
+      business: modelName,
       question: prompt,
       conversationHistory,
-    })
-    await updateUser({
-      id: userId,
-      input: {
-        credits: (userCredits - 1)
-      }
     })
 
     while (LLMResponseFinished) {
       if(!publishingTokens && tokenBatch.length === 0) {
+        await updateUser({
+          id: userId,
+          input: {
+            credits: (userCredits - 1)
+          }
+        })
         return {
           statusCode: 200,
           headers: {

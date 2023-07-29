@@ -1,4 +1,4 @@
-import {useContext, useState} from "react";
+import {useContext} from "react";
 import {ModelContext} from "src/context/ModelProvider";
 import {ConversationContext} from "src/context/ConversationProvider";
 import ConversationEntriesCell from "src/components/ConversationEntriesCell";
@@ -16,12 +16,11 @@ const Chat = () => {
             conversationId={conversation?.id}
           />
         ) : (
-          <div className={'flex flex-col items-center place-content-center h-screen '}>
+          <div className={'flex flex-col items-center place-content-center h-screen px-20 '}>
             Please choose a model to chat with. Then pick up on a conversation you had before or start a new one.
           </div>
         )
       }
-
     </>
   )
 }

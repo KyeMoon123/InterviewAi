@@ -3,7 +3,7 @@ import type {CellFailureProps, CellSuccessProps} from '@redwoodjs/web'
 import {useContext, useEffect} from "react";
 import {ModelContext} from "src/context/ModelProvider";
 import {ConversationContext} from "src/context/ConversationProvider";
-import Skeleton, {SkeletonTheme} from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 
 export const QUERY = gql`
@@ -54,9 +54,9 @@ export const Success = ({models}: CellSuccessProps<ModelsQuery>) => {
             <li key={m.id} className="px-2 space-y-2">
               <button
                 onClick={() => handleSelectModel(m)}
-                className={`p-3 rounded-lg w-full flex justify-between align-middle items-center shadow-xl  cursor-pointer ${model && m.id === model.id ? 'bg-primary text-primary-content' : 'bg-base-100'}`}>
-                    <h2 className="capitalize text-sm">{(m.name)}</h2>
-                    <img className="w-8 h-8 " src={m.imageUrl} alt=""/>
+                className={`p-3 rounded-lg w-full flex space-x-4 h-12 align-middle items-center shadow-xl  cursor-pointer ${model && m.id === model.id ? 'bg-primary text-primary-content' : 'bg-base-100'}`}>
+                {m.imageUrl && <img className="h-8 " src={m.imageUrl} alt=""/>}
+                <h2 className="capitalize text-sm">{(m.name)}</h2>
               </button>
             </li>
           )

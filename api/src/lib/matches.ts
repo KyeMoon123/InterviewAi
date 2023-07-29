@@ -1,4 +1,4 @@
-import { PineconeClient, ScoredVector } from "@pinecone-database/pinecone";
+import {PineconeClient, ScoredVector} from "@pinecone-database/pinecone";
 
 export type Metadata = {
   url: string,
@@ -6,7 +6,13 @@ export type Metadata = {
   chunk: string,
 }
 
-const getMatchesFromEmbeddings = async (embeddings: number[], pinecone: PineconeClient, topK: number): Promise<ScoredVector[]> => {
+
+const getMatchesFromEmbeddings = async ({
+                                          embeddings,
+                                          pinecone,
+                                          topK,
+                                          namespace
+                                        }: { embeddings: number[], pinecone: PineconeClient, topK: number, namespace: string }): Promise<ScoredVector[]> => {
   if (!process.env.PINECONE_INDEX_NAME) {
     throw (new Error("PINECONE_INDEX_NAME is not set"))
   }
@@ -16,7 +22,7 @@ const getMatchesFromEmbeddings = async (embeddings: number[], pinecone: Pinecone
     vector: embeddings,
     topK,
     includeMetadata: true,
-    namespace: "airwallex",
+    namespace: namespace,
   }
   console.log("Querying embeddings: ", queryRequest)
   console.log("Size: ", queryRequest.vector.length)
@@ -36,4 +42,4 @@ const getMatchesFromEmbeddings = async (embeddings: number[], pinecone: Pinecone
   }
 }
 
-export { getMatchesFromEmbeddings }
+export {getMatchesFromEmbeddings}

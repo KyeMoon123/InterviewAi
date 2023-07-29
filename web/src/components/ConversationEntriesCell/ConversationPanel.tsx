@@ -28,6 +28,7 @@ export const ConversationPanel = ({conversationEntries}: ConversationProps) => {
   useChannel(String(currentUser.sub), (message) => {
     switch (message.data.event) {
       case "response":
+        setText("")
         setStatusMessage("Typing");
         setLocalConversation((state) => updateChatbotMessage(state, message));
         break;
@@ -35,7 +36,7 @@ export const ConversationPanel = ({conversationEntries}: ConversationProps) => {
         setStatusMessage(message.data.message);
         break;
       case "responseEnd":
-      default:
+        setText("")
         setDisableInput(false)
         setStatusMessage("Waiting for query");
     }
@@ -62,14 +63,11 @@ export const ConversationPanel = ({conversationEntries}: ConversationProps) => {
           conversationId: conversation.id,
         }
       })
-
     } catch (error) {
       toast.error(error.message);
       setLocalConversation((state) => state.slice(0, state.length - 1));
       setDisableInput(false)
-    } finally {
-      setText("");
-    }
+    } finally {}
   };
 
   return (
