@@ -3,7 +3,7 @@ import type {MutationResolvers, QueryResolvers} from 'types/graphql'
 import {db} from 'src/lib/db'
 
 const Stripe = require('stripe')
-const stripe = Stripe("sk_test_51NU6MuHjkj0WoObL0VePy1f0xdIe7iF2xVK8T1tlLTHQNkwoWfxGCn19n6ANz1gP7ipHwVYeHC7ZLwrQkVPo7wnz00ohRki5rs");
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const users: QueryResolvers['users'] = () => {
   return db.user.findMany()
