@@ -17,9 +17,14 @@ const ForgotPasswordPage = () => {
     await client.auth.resetPasswordForEmail(data.email, {
       redirectTo: "https://www.interview-ai.one/update-password",
     }).then((res) => {
-      toast.dismiss()
-      toast("Please check your email for a password reset link.", {duration: 10000})
-      reset()
+      if (res.error) {
+        toast.dismiss()
+        toast.error(res.error.message)
+      }else {
+        toast.dismiss()
+        toast.success("Please check your email for a password reset link.", {duration: 10000})
+        reset()
+      }
     })
   }
 
@@ -66,8 +71,6 @@ const ForgotPasswordPage = () => {
               Back to login
                         </span>
             </p>
-
-
 
             <div className="w-full flex items-center justify-between py-5">
               <hr className="w-full bg-gray-400"/>

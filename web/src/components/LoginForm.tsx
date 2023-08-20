@@ -140,7 +140,7 @@ export function LoginForm() {
         </div>
         {action === FormAction.LOGIN &&
           <div className={'pt-1 '}>
-            <label onClick={()=>navigate(routes.forgotPassword())} className="text-xs cursor-pointer  hover:underline leading-none text-base-100">forgot
+            <label onClick={()=>navigate(routes.forgotPassword())} className="text-xs cursor-pointer  hover:underline leading-none text-base-content">forgot
               password?</label>
           </div>
         }
