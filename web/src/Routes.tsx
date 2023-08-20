@@ -17,6 +17,7 @@ const Routes = () => {
   return (
 
     <Router useAuth={useAuth}>
+      <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
       <Route path="/login" page={LoginPage} name="login"/>
       <AppLayout>
         <Route path="/success" page={CheckoutSuccessPage} name="checkoutSuccess" />
@@ -24,6 +25,7 @@ const Routes = () => {
         <Route path="/" page={HomePage} name="home"/>
       </AppLayout>
       <Private unauthenticated={"login"}>
+        <Route path="/update-password" page={UpdatePasswordPage} name="updatePassword" />
         <ChatLayout>
           <Route path="/profile" page={ProfilePage} name="profile"/>
           <Route path="/chat" page={ChatPage} name="chat"/>

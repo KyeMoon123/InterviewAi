@@ -45,7 +45,7 @@ const ProfileSection = ({user}: ProfileSectionProps) => {
 
   const onClickCancelSubscription = async () => {
     {
-      (!user.subscriptionId || user.subscriptionCancelAtPeriodEnd )  ?
+      (!user.subscriptionId || user.subscriptionCancelAtPeriodEnd) ?
         toast.error('You do not have an active subscription')
         :     // @ts-ignore
         window.cancel_confirmation.showModal()
@@ -104,10 +104,15 @@ const ProfileSection = ({user}: ProfileSectionProps) => {
                   ? (
                     <>
                       <span className={'text-sm text-base-content'}>You have cancelled your subscription</span>
-                      <span className={'text-sm text-base-content'}>{`It will end on ${dayjs(user.subscriptionCurrentPeriodEnd).format('DD MMMM YYYY')} and will not be renewed`} </span>
+                      <span
+                        className={'text-sm text-base-content'}>{`It will end on ${dayjs(user.subscriptionCurrentPeriodEnd).format('DD MMMM YYYY')} and will not be renewed`} </span>
                     </>
                   )
-                  : (<span>{dayjs(user.subscriptionCurrentPeriodEnd).format('DD MMMM YYYY')}</span>)
+                  : (<span>{
+                    user.subscriptionCurrentPeriodEnd
+                      ? dayjs(user.subscriptionCurrentPeriodEnd).format('DD MMMM YYYY')
+                      : '-'
+                  }</span>)
 
                 }
               </div>

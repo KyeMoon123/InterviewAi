@@ -29,7 +29,7 @@ export const FAQ = () => {
 }
 
 
-const FAQBlock = ({title, answer}) => {
+export const FAQBlock = ({title, answer}) => {
   return (
     <div className="p-4 w-full flex">
       <div className="flex-grow pl-6">

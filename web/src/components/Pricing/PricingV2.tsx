@@ -101,21 +101,21 @@ export const PricingV2 = () => {
             <thead>
             <tr>
               <th
-                className="px-4 py-3 title-font tracking-wider font-medium  text-sm bg-gray-100 rounded-tl rounded-bl">Plan
+                className="px-4 py-3 title-font tracking-wider font-medium bg-base-100  text-sm rounded-tl rounded-bl">Plan
               </th>
-              <th className="px-4 py-3 title-font tracking-wider font-medium  text-sm bg-gray-100">Credits
+              <th className="px-4 py-3 title-font tracking-wider font-medium bg-base-100 text-sm ">Credits
                 <span className="text-xs ml-1 font-normal ">/mo</span>
               </th>
               <th
-                className="px-4 py-3 title-font tracking-wider font-medium  text-sm bg-gray-100">Language models
+                className="px-4 py-3 title-font tracking-wider font-medium  bg-base-100 text-sm ">Language models
               </th>
-              <th className="px-4 py-3 title-font tracking-wider font-medium  text-sm bg-gray-100">Price
+              <th className="px-4 py-3 title-font tracking-wider font-medium bg-base-100  text-sm ">Price
               </th>
               <th
-                className="w-10 title-font tracking-wider font-medium  text-sm bg-gray-100 rounded-tr rounded-br pr-2">Select</th>
+                className="w-10 title-font tracking-wider font-medium  text-sm bg-base-100  rounded-tr rounded-br pr-2">Select</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody >
             <tr>
               <td className="px-4 py-3">Hobby</td>
               <td className="px-4 py-3">950</td>
@@ -128,7 +128,7 @@ export const PricingV2 = () => {
               </td>
             </tr>
             <tr>
-              <td className="border-t-2 border-gray-200 px-4 py-3">Growth</td>
+              <td className="  border-t-2 border-gray-200 px-4 py-3">Growth</td>
               <td className="border-t-2 border-gray-200 px-4 py-3">2,850</td>
               <td className="border-t-2 border-gray-200 px-4 py-3">All</td>
               <td className="border-t-2 border-gray-200 px-4 py-3 text-lg ">$49</td>
