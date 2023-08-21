@@ -65,12 +65,13 @@ export const sliceIntoChunks = (arr: Vector[], chunkSize: number) => {
 };
 
 export const indexReviews = async (reviews:  CreateReviewInput[], source:string, modelName: string) => {
-  const indexName = "test"
+  const indexName = process.env.PINECONE_INDEX_NAME
   const limiter = new Bottleneck({
     minTime: 50
   });
 
   const documents = await Promise.all(reviews.map(async row => {
+
     const splitter = new TokenTextSplitter({
       encodingName: "gpt2",
       chunkSize: 300,
@@ -94,8 +95,7 @@ export const indexReviews = async (reviews:  CreateReviewInput[], source:string,
   //Embed the documents
   const getEmbedding = async (doc: Document) => {
     const embedding = await embedder.embedQuery(doc.pageContent)
-    console.log(doc.pageContent)
-    console.log("got embedding", embedding.length)
+
     process.stdout.write(`${Math.floor((counter / documents.flat().length) * 100)}%\r`)
     counter = counter + 1
     return {
@@ -117,7 +117,6 @@ export const indexReviews = async (reviews:  CreateReviewInput[], source:string,
   try {
     vectors = await Promise.all(documents.flat().map((doc) => rateLimitedGetEmbedding(doc))) as unknown as Vector[]
     const chunks = sliceIntoChunks(vectors, 10)
-    console.log(chunks.length)
 
     try {
       await Promise.all(chunks.map(async chunk => {

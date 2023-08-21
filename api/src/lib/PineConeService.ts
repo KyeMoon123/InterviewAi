@@ -17,8 +17,7 @@ export const EmbeddingsService = (function () {
   //Embed the documents
   const getEmbedding = async (doc: Document) => {
     const embedding = await embedder.embedQuery(doc.pageContent)
-    console.log(doc.pageContent)
-    console.log("got embedding", embedding.length)
+
     counter = counter + 1
     return {
       id: uuid(),

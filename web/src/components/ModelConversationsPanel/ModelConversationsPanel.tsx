@@ -50,11 +50,15 @@ const ModelConversationsPanel = () => {
   return (
     <div>
       <div className="flex flex-col h-screen bg-base-300 w-72 pt-6 border-l border-base-100">
-        <div className={'flex space-x-4 text-lg px-4'}>
-          <h2 className={'flex  align-middle font-semibold'}>Conversations </h2>
-          <button onClick={() => setShow(!show)} className={'btn btn-sm '}>
-            <PlusIcon className={'w-6'}/>
-          </button>
+        <div className={'flex flex-col space-x-4 text-lg px-4'}>
+          <h2 className={'flex  ml-4 font-semibold'}>Conversations </h2>
+          <div className={'flex space-x-4 align-middle'}>
+            <p className={'text-sm text-gray-500 pt-0.5'}>Start a new conversation</p>
+            <button onClick={() => setShow(!show)} className={'btn btn-xs btn-primary'}>
+              <PlusIcon className={'w-4'}/>
+            </button>
+          </div>
+
         </div>
         {show && <ConversationNameInput onSubmit={handleCreateConversation} setName={setName}/>}
         <div className="divider"/>
@@ -78,9 +82,11 @@ export const ConversationNameInput = ({onSubmit, setName, name}: ConversationNam
   return (
     <div className={'flex space-x-4 place-content-center pt-3 '}>
       <div className="flex  space-x-2">
-        <input value={name} type="text" placeholder="Conversation name" className="input input-sm input-bordered"
+
+        <input value={name} type="text" placeholder="Enter conversation title" className="input input-sm input-bordered"
                onChange={(e) => setName(e.target.value)}/>
-        <button onClick={() => onSubmit()} className="btn btn-sm  normal-case">Start</button>
+
+        <button onClick={() => onSubmit()} className="btn btn-sm btn-primary  normal-case">Start</button>
       </div>
     </div>
   )
