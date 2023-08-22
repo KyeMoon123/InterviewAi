@@ -21,7 +21,11 @@ export const FAQ = () => {
               'For example, if you signed up on the 15th of the month, your credits will be renewed on the 15th of each month.' +
               ' you can see your next renewal date on your profile dashboard.'}
           />
-          <FAQBlock title={'If you have any other questions, please reach out on twitter'} answer={' @interviewaiapp'}/>
+          <FAQBlock title={'If you have any other questions, please reach out on LinkedIn'} answer={
+            <>
+              <a target={'_blank'} className={'text-primary'} href={'https://www.linkedin.com/in/kye-moon-134b90187/'}>Kye moon</a>
+            </>
+          }/>
         </div>
       </div>
     </section>
