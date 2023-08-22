@@ -75,7 +75,11 @@ export const ConversationPanel = ({conversationEntries}: ConversationProps) => {
       <div className={'flex flex-col justify-between h-full '}>
         <div className={' px-6 bg-base-200 text-base-content py-2'}>
           <div className={'flex flex-col '}>
-            <h1 className={'capitalize text-lg font-semibold'}>{model.name}</h1>
+            <div className={'flex space-x-4'}>
+              <img className={'w-8'} src={model.imageUrl}/>
+              <h1 className={'capitalize text-lg font-semibold'}>{model.name}</h1>
+            </div>
+
             <div className={'flex space-x-4'}>
               <h1 className={' text-sm font-semibold '}>{statusMessage}</h1>
               {

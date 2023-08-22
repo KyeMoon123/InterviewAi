@@ -120,7 +120,7 @@ export const PricingV2 = () => {
               <td className="px-4 py-3">Hobby</td>
               <td className="px-4 py-3">950</td>
               <td className="px-4 py-3">All</td>
-              <td className="px-4 py-3 text-lg ">$19</td>
+              <td className="px-4 py-3 text-lg ">$9</td>
               <td className="w-10 text-center">
                 <input onClick={() => {
                   setSelectedPlan('Hobby')
@@ -131,7 +131,7 @@ export const PricingV2 = () => {
               <td className="  border-t-2 border-gray-200 px-4 py-3">Growth</td>
               <td className="border-t-2 border-gray-200 px-4 py-3">2,850</td>
               <td className="border-t-2 border-gray-200 px-4 py-3">All</td>
-              <td className="border-t-2 border-gray-200 px-4 py-3 text-lg ">$49</td>
+              <td className="border-t-2 border-gray-200 px-4 py-3 text-lg ">$19</td>
               <td className="border-t-2 border-gray-200 w-10 text-center">
                 <input onClick={() => {
                   setSelectedPlan('Growth')
@@ -142,7 +142,7 @@ export const PricingV2 = () => {
               <td className="border-t-2 border-gray-200 px-4 py-3">Standard</td>
               <td className="border-t-2 border-gray-200 px-4 py-3">10,000</td>
               <td className="border-t-2 border-gray-200 px-4 py-3">All</td>
-              <td className="border-t-2 border-gray-200 px-4 py-3 text-lg ">$99</td>
+              <td className="border-t-2 border-gray-200 px-4 py-3 text-lg ">$39</td>
               <td className="border-t-2 border-gray-200 w-10 text-center">
                 <input onClick={() => {
                   setSelectedPlan('Standard')

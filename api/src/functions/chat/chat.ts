@@ -105,7 +105,7 @@ export const chatHandler = async (event: APIGatewayEvent, _context: Context) => 
     const matches = await getMatchesFromEmbeddings({
       pinecone:pinecone,
       embeddings: embeddings,
-      topK: 6,
+      topK: 8,
       namespace: modelName,
     });
 
@@ -130,6 +130,7 @@ export const chatHandler = async (event: APIGatewayEvent, _context: Context) => 
       streaming: true,
       verbose: true,
       modelName: "gpt-3.5-turbo",
+      temperature: 0.7,
       callbackManager: CallbackManager.fromHandlers({
         async handleLLMNewToken(token) {
           tokenBatch.push(token); // Accumulate tokens in a batch
